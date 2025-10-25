@@ -1,0 +1,130 @@
+[
+  {
+    "id": "job-001",
+    "title": "Senior Full Stack Developer",
+    "department": "Engineering",
+    "location": "Remote",
+    "type": "Full-time",
+    "experience": "5+ years",
+    "description": "We're looking for an experienced Full Stack Developer to join our engineering team and help build cutting-edge web applications.",
+    "responsibilities": [
+      "Design and develop scalable web applications using modern frameworks",
+      "Collaborate with cross-functional teams to define and implement new features",
+      "Write clean, maintainable, and well-documented code",
+      "Participate in code reviews and mentor junior developers",
+      "Optimize applications for maximum speed and scalability"
+    ],
+    "requirements": [
+      "5+ years of experience in full stack development",
+      "Strong proficiency in React, Node.js, and TypeScript",
+      "Experience with modern CSS frameworks (Tailwind, etc.)",
+      "Familiarity with cloud platforms (AWS, GCP, or Azure)",
+      "Excellent problem-solving and communication skills"
+    ],
+    "benefits": [
+      "Competitive salary and equity",
+      "Health, dental, and vision insurance",
+      "Flexible work hours and remote work options",
+      "Professional development budget",
+      "Collaborative and innovative work environment"
+    ],
+    "isActive": true,
+    "postedDate": "2024-10-15"
+  },
+  {
+    "id": "job-002",
+    "title": "UI/UX Designer",
+    "department": "Design",
+    "location": "Hybrid - New York",
+    "type": "Full-time",
+    "experience": "3+ years",
+    "description": "Join our design team to create beautiful and intuitive user experiences for our products.",
+    "responsibilities": [
+      "Create wireframes, prototypes, and high-fidelity designs",
+      "Conduct user research and usability testing",
+      "Collaborate with developers to ensure design implementation",
+      "Maintain and evolve our design system",
+      "Present design concepts to stakeholders"
+    ],
+    "requirements": [
+      "3+ years of UI/UX design experience",
+      "Proficiency in Figma, Sketch, or Adobe XD",
+      "Strong portfolio demonstrating design thinking",
+      "Understanding of modern web technologies",
+      "Excellent visual design skills"
+    ],
+    "benefits": [
+      "Competitive salary",
+      "Health and wellness benefits",
+      "Creative and supportive team environment",
+      "Latest design tools and software",
+      "Flexible work arrangements"
+    ],
+    "isActive": true,
+    "postedDate": "2024-10-20"
+  },
+  {
+    "id": "job-003",
+    "title": "DevOps Engineer",
+    "department": "Engineering",
+    "location": "Remote",
+    "type": "Full-time",
+    "experience": "4+ years",
+    "description": "We need a skilled DevOps Engineer to optimize our infrastructure and deployment processes.",
+    "responsibilities": [
+      "Design and maintain CI/CD pipelines",
+      "Manage cloud infrastructure and deployments",
+      "Implement monitoring and logging solutions",
+      "Ensure system security and compliance",
+      "Automate repetitive tasks and processes"
+    ],
+    "requirements": [
+      "4+ years of DevOps experience",
+      "Strong knowledge of Docker, Kubernetes, and cloud platforms",
+      "Experience with Infrastructure as Code (Terraform, CloudFormation)",
+      "Proficiency in scripting languages (Python, Bash)",
+      "Understanding of security best practices"
+    ],
+    "benefits": [
+      "Competitive compensation package",
+      "Comprehensive health benefits",
+      "Remote work flexibility",
+      "Learning and certification budget",
+      "Cutting-edge technology stack"
+    ],
+    "isActive": true,
+    "postedDate": "2024-10-18"
+  },
+  {
+    "id": "job-004",
+    "title": "Product Manager",
+    "department": "Product",
+    "location": "San Francisco, CA",
+    "type": "Full-time",
+    "experience": "5+ years",
+    "description": "Lead product strategy and development for our flagship products.",
+    "responsibilities": [
+      "Define product vision and roadmap",
+      "Gather and prioritize product requirements",
+      "Work closely with engineering and design teams",
+      "Analyze market trends and user feedback",
+      "Drive product launches and go-to-market strategies"
+    ],
+    "requirements": [
+      "5+ years of product management experience",
+      "Strong analytical and strategic thinking skills",
+      "Experience with Agile methodologies",
+      "Excellent communication and leadership abilities",
+      "Technical background preferred"
+    ],
+    "benefits": [
+      "Competitive salary with equity",
+      "Comprehensive benefits package",
+      "Opportunity to shape product direction",
+      "Collaborative work culture",
+      "Career growth opportunities"
+    ],
+    "isActive": true,
+    "postedDate": "2024-10-10"
+  }
+]
