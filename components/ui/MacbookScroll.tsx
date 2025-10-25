@@ -31,25 +31,27 @@ export const MacbookScroll: React.FC<MacbookScrollProps> = ({
     }
   }, []);
 
-  const scaleX = useTransform(
+  // Zoom animation - starts at 1 and scales up massively to create zoom-in effect
+  const scale = useTransform(
     scrollYProgress,
-    [0, 0.3],
-    [1.2, isMobile ? 1 : 1.5]
+    [0, 0.5, 1],
+    [1, isMobile ? 3 : 6, isMobile ? 5 : 10]
   );
-  const scaleY = useTransform(
-    scrollYProgress,
-    [0, 0.3],
-    [0.6, isMobile ? 1 : 1.5]
-  );
-  const translate = useTransform(scrollYProgress, [0, 1], [0, 1500]);
-  const rotate = useTransform(scrollYProgress, [0.1, 0.12, 0.3], [-28, -28, 0]);
-  const textTransform = useTransform(scrollYProgress, [0, 0.3], [0, 100]);
-  const textOpacity = useTransform(scrollYProgress, [0, 0.2], [1, 0]);
+
+  // Subtle Y translation to bring the MacBook forward
+  const translateY = useTransform(scrollYProgress, [0, 0.5, 1], [0, -50, -100]);
+
+  // Rotate from angled to flat as we zoom in
+  const rotate = useTransform(scrollYProgress, [0, 0.2, 0.4], [-25, -10, 0]);
+
+  // Text animations
+  const textTransform = useTransform(scrollYProgress, [0, 0.2], [0, 100]);
+  const textOpacity = useTransform(scrollYProgress, [0, 0.15], [1, 0]);
 
   return (
     <div
       ref={ref}
-      className="min-h-[200vh] flex flex-col items-center py-0 md:py-80 justify-start flex-shrink-0 transform md:scale-100 scale-[0.35] sm:scale-50"
+      className="min-h-[300vh] flex flex-col items-center py-0 md:py-40 justify-start flex-shrink-0 transform md:scale-100 scale-[0.35] sm:scale-50"
     >
       <motion.h2
         style={{
@@ -67,10 +69,9 @@ export const MacbookScroll: React.FC<MacbookScrollProps> = ({
       {/* Lid */}
       <Lid
         src={src}
-        scaleX={scaleX}
-        scaleY={scaleY}
+        scale={scale}
         rotate={rotate}
-        translate={translate}
+        translateY={translateY}
       />
       {/* Base area */}
       <div className="relative -z-10 h-[22rem] w-[32rem] overflow-hidden rounded-2xl bg-gray-200 dark:bg-[#272729]">
@@ -101,25 +102,24 @@ export const MacbookScroll: React.FC<MacbookScrollProps> = ({
 };
 
 export const Lid = ({
-  scaleX,
-  scaleY,
+  scale,
   rotate,
-  translate,
+  translateY,
   src,
 }: {
-  scaleX: any;
-  scaleY: any;
+  scale: any;
   rotate: any;
-  translate: any;
+  translateY: any;
   src?: string;
 }) => {
   return (
     <div className="relative [perspective:800px]">
-      <div
+      <motion.div
         style={{
-          transform: 'perspective(800px) rotateX(-25deg) translateZ(0px)',
-          transformOrigin: 'bottom',
+          rotateX: rotate,
+          translateY: translateY,
           transformStyle: 'preserve-3d',
+          transformOrigin: 'center center',
         }}
         className="relative h-[12rem] w-[32rem] rounded-2xl bg-[#010101] p-2"
       >
@@ -127,32 +127,31 @@ export const Lid = ({
           style={{
             boxShadow: '0px 2px 0px 2px var(--neutral-900) inset',
           }}
-          className="absolute inset-0 flex items-center justify-center rounded-lg bg-[#010101]"
+          className="absolute inset-0 rounded-lg bg-[#010101] overflow-hidden"
         >
-          <span className="text-white">
-            {src ? (
-              <motion.div
+          {src ? (
+            <motion.div
+              style={{
+                scale: scale,
+                transformStyle: 'preserve-3d',
+                transformOrigin: 'center center',
+              }}
+              className="absolute inset-0 w-full h-full"
+            >
+              <div
+                className="absolute inset-0 w-full h-full rounded-lg bg-cover bg-center bg-no-repeat"
                 style={{
-                  scaleX: scaleX,
-                  scaleY: scaleY,
-                  rotateX: rotate,
-                  translateY: translate,
-                  transformStyle: 'preserve-3d',
-                  transformOrigin: 'top',
+                  backgroundImage: `url(${src})`,
                 }}
-                className="h-full w-full"
-              >
-                <div
-                  className="absolute inset-0 rounded-lg bg-cover bg-center bg-no-repeat"
-                  style={{
-                    backgroundImage: `url(${src})`,
-                  }}
-                />
-              </motion.div>
-            ) : null}
-          </span>
+              />
+            </motion.div>
+          ) : (
+            <div className="absolute inset-0 flex items-center justify-center">
+              <span className="text-white/40 text-xs">No screenshot</span>
+            </div>
+          )}
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 };

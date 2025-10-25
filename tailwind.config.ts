@@ -8,6 +8,10 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        inter: ['var(--font-inter)'],
+        cairo: ['var(--font-cairo)'],
+      },
       colors: {
         primary: {
           50: "#e6f0ff",
@@ -26,6 +30,14 @@ const config: Config = {
           blue: "#00f0ff",
           purple: "#8b5cf6",
           green: "#00ff87",
+        },
+        apple: {
+          pink: "#FF2D55",
+          purple: "#AF52DE",
+          blue: "#5E5CE6",
+          teal: "#5AC8FA",
+          cyan: "#32D74B",
+          indigo: "#5856D6",
         },
       },
       backgroundImage: {

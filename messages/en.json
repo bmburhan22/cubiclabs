@@ -1,0 +1,182 @@
+{
+  "nav": {
+    "home": "Home",
+    "about": "About",
+    "pricing": "Pricing",
+    "careers": "Careers",
+    "contact": "Contact",
+    "getStarted": "Get Started"
+  },
+  "hero": {
+    "welcome": "Welcome to the Future",
+    "title": "Building Tomorrow's Technology",
+    "subtitle": "We create cutting-edge solutions that transform businesses and shape the digital landscape",
+    "ctaPrimary": "Get Started",
+    "ctaSecondary": "Learn More"
+  },
+  "macbook": {
+    "title": "Experience our platform",
+    "titleHighlight": "in stunning detail"
+  },
+  "about": {
+    "title": "About Cubiclabs",
+    "subtitle": "Pioneering Innovation in Technology",
+    "description": "We are a team of passionate innovators dedicated to creating transformative technology solutions.",
+    "mission": "Our Mission",
+    "missionText": "To empower businesses with cutting-edge technology solutions that drive growth and innovation.",
+    "vision": "Our Vision",
+    "visionText": "To be the leading technology partner for businesses worldwide, shaping the future of digital transformation.",
+    "values": "Our Values",
+    "innovation": "Innovation",
+    "innovationText": "Pushing boundaries and exploring new possibilities",
+    "excellence": "Excellence",
+    "excellenceText": "Delivering quality in everything we do",
+    "collaboration": "Collaboration",
+    "collaborationText": "Working together to achieve extraordinary results",
+    "integrity": "Integrity",
+    "integrityText": "Building trust through transparency and honesty"
+  },
+  "pricing": {
+    "title": "Simple, Transparent Pricing",
+    "subtitle": "Choose the perfect plan for your needs",
+    "monthly": "Monthly",
+    "yearly": "Yearly",
+    "save": "Save 20%",
+    "perMonth": "/month",
+    "choosePlan": "Choose Plan",
+    "popularPlan": "Most Popular",
+    "starter": {
+      "name": "Starter",
+      "description": "Perfect for individuals and small projects",
+      "features": [
+        "Up to 5 projects",
+        "Basic support",
+        "1 GB storage",
+        "Email notifications",
+        "Basic analytics"
+      ]
+    },
+    "professional": {
+      "name": "Professional",
+      "description": "Ideal for growing businesses",
+      "features": [
+        "Unlimited projects",
+        "Priority support",
+        "50 GB storage",
+        "Advanced analytics",
+        "Custom integrations",
+        "Team collaboration"
+      ]
+    },
+    "enterprise": {
+      "name": "Enterprise",
+      "description": "For large organizations",
+      "features": [
+        "Everything in Professional",
+        "Dedicated support",
+        "Unlimited storage",
+        "Custom solutions",
+        "SLA guarantee",
+        "Advanced security"
+      ]
+    }
+  },
+  "careers": {
+    "title": "Join Our Team",
+    "subtitle": "Build the future with us",
+    "description": "We're always looking for talented individuals to join our innovative team.",
+    "openPositions": "Open Positions",
+    "noPositions": "No open positions at the moment",
+    "checkBack": "Check back soon for new opportunities",
+    "cantFind": "Can't find the right role?",
+    "cantFindDesc": "We're always interested in meeting talented people. Send us your resume and we'll keep you in mind for future opportunities.",
+    "getInTouch": "Get In Touch",
+    "applyNow": "Apply Now",
+    "location": "Location",
+    "type": "Type",
+    "department": "Department",
+    "posted": "Posted",
+    "responsibilities": "Responsibilities",
+    "requirements": "Requirements",
+    "benefits": "What We Offer"
+  },
+  "contact": {
+    "title": "Get In Touch",
+    "subtitle": "We'd love to hear from you",
+    "description": "Have a question or want to work together? Drop us a message!",
+    "name": "Name",
+    "namePlaceholder": "Your name",
+    "email": "Email",
+    "emailPlaceholder": "your@email.com",
+    "subject": "Subject",
+    "subjectPlaceholder": "What is this about?",
+    "message": "Message",
+    "messagePlaceholder": "Your message here...",
+    "send": "Send Message",
+    "sending": "Sending...",
+    "successTitle": "Message Sent!",
+    "successMessage": "We'll get back to you soon.",
+    "errorTitle": "Error",
+    "errorMessage": "Failed to send message. Please try again."
+  },
+  "application": {
+    "title": "Apply for Position",
+    "generalTitle": "General Application",
+    "position": "Position",
+    "jobId": "Job ID",
+    "personalInfo": "Personal Information",
+    "fullName": "Full Name",
+    "fullNamePlaceholder": "John Doe",
+    "email": "Email",
+    "emailPlaceholder": "john@example.com",
+    "phone": "Phone Number",
+    "phonePlaceholder": "+1 (555) 123-4567",
+    "portfolio": "Portfolio/LinkedIn (Optional)",
+    "portfolioPlaceholder": "https://...",
+    "cv": "CV/Resume",
+    "cvPlaceholder": "Attach your CV (PDF, DOC, DOCX - Max 5MB)",
+    "coverLetter": "Cover Letter (Optional)",
+    "coverLetterPlaceholder": "Tell us why you're a great fit...",
+    "submit": "Submit Application",
+    "submitting": "Submitting...",
+    "successTitle": "Application Submitted!",
+    "successMessage": "We'll review your application and get back to you soon.",
+    "errorTitle": "Error",
+    "errorMessage": "Failed to submit application. Please try again.",
+    "close": "Close"
+  },
+  "footer": {
+    "tagline": "Building the future of technology, one innovation at a time.",
+    "company": "Company",
+    "aboutUs": "About Us",
+    "careers": "Careers",
+    "blog": "Blog",
+    "press": "Press",
+    "legal": "Legal",
+    "privacy": "Privacy Policy",
+    "terms": "Terms of Service",
+    "cookies": "Cookie Policy",
+    "connect": "Connect",
+    "address": "Kuwait City, Qibla, Salhiya Street, Luhaib (3), Office No: 213",
+    "phone": "+965 41147331",
+    "email": "info@cubiclabs.net",
+    "rights": "All rights reserved."
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "Error",
+    "success": "Success",
+    "cancel": "Cancel",
+    "save": "Save",
+    "delete": "Delete",
+    "edit": "Edit",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "search": "Search",
+    "filter": "Filter",
+    "sort": "Sort",
+    "notFound": "Not Found",
+    "backHome": "Back to Home"
+  }
+}

@@ -17,7 +17,7 @@ import {
   CheckCircle,
 } from 'lucide-react';
 import jobsData from '@/data/jobs.json';
-import { sendApplicationEmail, initEmailJS } from '@/lib/email/emailjs';
+// Email sending via API route
 
 interface Job {
   id: string;
@@ -65,7 +65,6 @@ export default function JobApplicationPage({
   });
 
   useEffect(() => {
-    initEmailJS();
     const foundJob = jobs.find((j) => j.id === params.jobId);
     setJob(foundJob || null);
   }, [params.jobId, jobs]);
@@ -96,28 +95,36 @@ export default function JobApplicationPage({
 
     setIsSubmitting(true);
 
-    // Note: For actual file upload, you'd need to use a service like Cloudinary, AWS S3, etc.
-    // For now, we'll just send the application without the actual file
-    // You can add file upload integration here
+    try {
+      const formData = new FormData();
+      formData.append('name', data.name);
+      formData.append('email', data.email);
+      formData.append('phone', data.phone);
+      formData.append('address', data.address || '');
+      formData.append('message', data.message || '');
+      formData.append('jobId', job.id);
+      formData.append('jobTitle', job.title);
+      formData.append('cv', cvFile);
 
-    const result = await sendApplicationEmail({
-      name: data.name,
-      email: data.email,
-      phone: data.phone,
-      address: data.address,
-      jobId: job.id,
-      jobTitle: job.title,
-      message: data.message,
-      cvUrl: cvFile.name, // In production, this would be the uploaded file URL
-    });
+      const response = await fetch('/api/apply', {
+        method: 'POST',
+        body: formData,
+      });
 
-    if (result.success) {
-      toast.success(
-        'Application submitted successfully! We\'ll review your application and get back to you soon.'
-      );
-      reset();
-      setCvFile(null);
-    } else {
+      const result = await response.json();
+
+      if (response.ok && result.success) {
+        toast.success(
+          'Application submitted successfully! We\'ll review your application and get back to you soon.'
+        );
+        reset();
+        setCvFile(null);
+      } else {
+        toast.error(
+          'Failed to submit application. Please try again or email us directly.'
+        );
+      }
+    } catch (error) {
       toast.error(
         'Failed to submit application. Please try again or email us directly.'
       );

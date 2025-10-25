@@ -46,7 +46,7 @@ export default function HomePage() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
-            className="space-y-8"
+            className="space-y-8 backdrop-blur-md bg-black/30 p-8 md:p-12 rounded-3xl border border-white/10"
           >
             {/* Typing Animation */}
             <div className="text-cyber-blue text-sm md:text-base font-semibold mb-4">

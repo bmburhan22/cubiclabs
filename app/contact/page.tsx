@@ -1,13 +1,13 @@
 'use client';
 
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { motion } from 'framer-motion';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import toast from 'react-hot-toast';
 import { Mail, MapPin, Phone, Send } from 'lucide-react';
-import { sendContactEmail, initEmailJS } from '@/lib/email/emailjs';
+// Email sending via API route
 
 const contactSchema = z.object({
   name: z.string().min(2, 'Name must be at least 2 characters'),
@@ -48,19 +48,27 @@ export default function ContactPage() {
     resolver: zodResolver(contactSchema),
   });
 
-  useEffect(() => {
-    initEmailJS();
-  }, []);
-
   const onSubmit = async (data: ContactFormData) => {
     setIsSubmitting(true);
 
-    const result = await sendContactEmail(data);
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
+      });
 
-    if (result.success) {
-      toast.success('Message sent successfully! We\'ll get back to you soon.');
-      reset();
-    } else {
+      const result = await response.json();
+
+      if (response.ok && result.success) {
+        toast.success('Message sent successfully! We\'ll get back to you soon.');
+        reset();
+      } else {
+        toast.error('Failed to send message. Please try again or contact us directly.');
+      }
+    } catch (error) {
       toast.error('Failed to send message. Please try again or contact us directly.');
     }
 

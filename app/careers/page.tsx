@@ -19,7 +19,7 @@ import {
   X,
 } from 'lucide-react';
 import jobsData from '@/data/jobs.json';
-import { sendApplicationEmail, initEmailJS } from '@/lib/email/emailjs';
+// Email sending via API route
 
 interface Job {
   id: string;
@@ -63,10 +63,6 @@ export default function CareersPage() {
     resolver: zodResolver(generalApplicationSchema),
   });
 
-  useEffect(() => {
-    initEmailJS();
-  }, []);
-
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
@@ -91,25 +87,37 @@ export default function CareersPage() {
 
     setIsSubmitting(true);
 
-    const result = await sendApplicationEmail({
-      name: data.name,
-      email: data.email,
-      phone: data.phone,
-      address: data.address,
-      jobId: 'GENERAL',
-      jobTitle: 'General Application',
-      message: data.message,
-      cvUrl: cvFile.name,
-    });
+    try {
+      const formData = new FormData();
+      formData.append('name', data.name);
+      formData.append('email', data.email);
+      formData.append('phone', data.phone);
+      formData.append('address', data.address || '');
+      formData.append('message', data.message || '');
+      formData.append('jobId', 'GENERAL');
+      formData.append('jobTitle', 'General Application');
+      formData.append('cv', cvFile);
 
-    if (result.success) {
-      toast.success(
-        'Application submitted successfully! We\'ll review your application and get back to you soon.'
-      );
-      reset();
-      setCvFile(null);
-      setShowGeneralForm(false);
-    } else {
+      const response = await fetch('/api/apply', {
+        method: 'POST',
+        body: formData,
+      });
+
+      const result = await response.json();
+
+      if (response.ok && result.success) {
+        toast.success(
+          'Application submitted successfully! We\'ll review your application and get back to you soon.'
+        );
+        reset();
+        setCvFile(null);
+        setShowGeneralForm(false);
+      } else {
+        toast.error(
+          'Failed to submit application. Please try again or email us directly.'
+        );
+      }
+    } catch (error) {
       toast.error(
         'Failed to submit application. Please try again or email us directly.'
       );

@@ -4,18 +4,21 @@ import { useState, useEffect } from 'react';
 import Link from 'next/link';
 import { Menu, X } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
-
-const navLinks = [
-  { href: '/', label: 'Home' },
-  { href: '/about', label: 'About' },
-  { href: '/pricing', label: 'Pricing' },
-  { href: '/careers', label: 'Careers' },
-  { href: '/contact', label: 'Contact' },
-];
+import LanguageSwitcher from './LanguageSwitcher';
+import { useTranslations } from '@/lib/LanguageContext';
 
 export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const t = useTranslations('nav');
+
+  const navLinks = [
+    { href: '/', label: t('home') },
+    { href: '/about', label: t('about') },
+    { href: '/pricing', label: t('pricing') },
+    { href: '/careers', label: t('careers') },
+    { href: '/contact', label: t('contact') },
+  ];
 
   useEffect(() => {
     const handleScroll = () => {
@@ -45,10 +48,10 @@ export default function Navbar() {
               whileHover={{ scale: 1.05, rotate: 5 }}
               className="relative"
             >
-              <div className="w-10 h-10 bg-gradient-to-br from-cyber-blue to-cyber-pink rounded-lg flex items-center justify-center">
+              <div className="w-10 h-10 bg-gradient-apple-br rounded-lg flex items-center justify-center">
                 <span className="text-xl font-bold">C</span>
               </div>
-              <div className="absolute inset-0 bg-gradient-to-br from-cyber-blue to-cyber-pink rounded-lg blur-md opacity-50 group-hover:opacity-75 transition-opacity -z-10"></div>
+              <div className="absolute inset-0 bg-gradient-apple-br rounded-lg blur-md opacity-50 group-hover:opacity-75 transition-opacity -z-10"></div>
             </motion.div>
             <span className="text-xl font-bold text-gradient hidden sm:inline">
               Cubiclabs
@@ -72,18 +75,20 @@ export default function Navbar() {
             ))}
           </div>
 
-          {/* CTA Button */}
-          <div className="hidden md:block">
+          {/* Language Switcher & CTA Button */}
+          <div className="hidden md:flex items-center space-x-3">
+            <LanguageSwitcher />
             <Link href="/contact">
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="relative px-6 py-2 bg-gradient-to-r from-cyber-blue to-cyber-pink rounded-lg font-semibold overflow-hidden group"
+                className="relative px-6 py-2 bg-gradient-apple-r rounded-lg font-semibold overflow-hidden group"
               >
-                <span className="relative z-10">Get Started</span>
+                <span className="relative z-10">{t('getStarted')}</span>
                 <motion.div
-                  className="absolute inset-0 bg-gradient-to-r from-cyber-pink to-cyber-blue opacity-0 group-hover:opacity-100 transition-opacity"
+                  className="absolute inset-0 bg-gradient-apple-r opacity-0 group-hover:opacity-100 transition-opacity"
                   layoutId="button-bg"
+                  style={{ filter: 'hue-rotate(30deg)' }}
                 />
               </motion.button>
             </Link>
@@ -119,9 +124,12 @@ export default function Navbar() {
                   {link.label}
                 </Link>
               ))}
+              <div className="pt-2 pb-2">
+                <LanguageSwitcher />
+              </div>
               <Link href="/contact" onClick={() => setIsMobileMenuOpen(false)}>
-                <button className="w-full px-4 py-3 bg-gradient-to-r from-cyber-blue to-cyber-pink rounded-lg font-semibold mt-2">
-                  Get Started
+                <button className="w-full px-4 py-3 bg-gradient-apple-r rounded-lg font-semibold mt-2">
+                  {t('getStarted')}
                 </button>
               </Link>
             </div>

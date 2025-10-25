@@ -2,25 +2,28 @@
 
 import Link from 'next/link';
 import { motion } from 'framer-motion';
-import { Github, Linkedin, Twitter, Mail, MapPin, Phone } from 'lucide-react';
-
-const socialLinks = [
-  { icon: Github, href: 'https://github.com', label: 'GitHub' },
-  { icon: Linkedin, href: 'https://linkedin.com', label: 'LinkedIn' },
-  { icon: Twitter, href: 'https://twitter.com', label: 'Twitter' },
-  { icon: Mail, href: 'mailto:info@cubiclabs.com', label: 'Email' },
-];
-
-const quickLinks = [
-  { href: '/', label: 'Home' },
-  { href: '/about', label: 'About' },
-  { href: '/pricing', label: 'Pricing' },
-  { href: '/careers', label: 'Careers' },
-  { href: '/contact', label: 'Contact' },
-];
+import { Instagram, Linkedin, Twitter, Mail, MapPin, Phone } from 'lucide-react';
+import { useTranslations } from '@/lib/LanguageContext';
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
+  const t = useTranslations('footer');
+  const tNav = useTranslations('nav');
+
+  const socialLinks = [
+    { icon: Instagram, href: 'https://www.instagram.com/cubic_labs/', label: 'Instagram' },
+    { icon: Linkedin, href: 'https://linkedin.com', label: 'LinkedIn' },
+    { icon: Twitter, href: 'https://twitter.com', label: 'Twitter' },
+    { icon: Mail, href: 'mailto:info@cubiclabs.net', label: 'Email' },
+  ];
+
+  const quickLinks = [
+    { href: '/', label: tNav('home') },
+    { href: '/about', label: tNav('about') },
+    { href: '/pricing', label: tNav('pricing') },
+    { href: '/careers', label: tNav('careers') },
+    { href: '/contact', label: tNav('contact') },
+  ];
 
   return (
     <footer className="relative border-t border-white/10 bg-black/50 backdrop-blur-sm">
@@ -38,13 +41,13 @@ export default function Footer() {
               <span className="text-xl font-bold text-gradient">Cubiclabs</span>
             </div>
             <p className="text-gray-400 text-sm">
-              Building the future with cutting-edge technology and innovative solutions.
+              {t('tagline')}
             </p>
           </div>
 
           {/* Quick Links */}
           <div>
-            <h3 className="text-white font-semibold mb-4">Quick Links</h3>
+            <h3 className="text-white font-semibold mb-4">{t('company')}</h3>
             <ul className="space-y-2">
               {quickLinks.map((link) => (
                 <li key={link.href}>
@@ -61,19 +64,19 @@ export default function Footer() {
 
           {/* Contact Info */}
           <div>
-            <h3 className="text-white font-semibold mb-4">Contact</h3>
+            <h3 className="text-white font-semibold mb-4">{t('connect')}</h3>
             <ul className="space-y-3">
               <li className="flex items-start space-x-2 text-gray-400 text-sm">
                 <MapPin size={16} className="mt-1 flex-shrink-0 text-cyber-blue" />
-                <span>123 Tech Street, Innovation City, IC 12345</span>
+                <span>{t('address')}</span>
               </li>
               <li className="flex items-center space-x-2 text-gray-400 text-sm">
                 <Phone size={16} className="flex-shrink-0 text-cyber-blue" />
-                <span>+1 (555) 123-4567</span>
+                <span>{t('phone')}</span>
               </li>
               <li className="flex items-center space-x-2 text-gray-400 text-sm">
                 <Mail size={16} className="flex-shrink-0 text-cyber-blue" />
-                <span>info@cubiclabs.com</span>
+                <span>{t('email')}</span>
               </li>
             </ul>
           </div>
@@ -103,14 +106,14 @@ export default function Footer() {
         <div className="pt-8 border-t border-white/10">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
             <p className="text-gray-400 text-sm">
-              © {currentYear} Cubiclabs. All rights reserved.
+              © {currentYear} Cubiclabs. {t('rights')}
             </p>
             <div className="flex space-x-6 text-sm">
               <Link href="/privacy" className="text-gray-400 hover:text-cyber-blue transition-colors">
-                Privacy Policy
+                {t('privacy')}
               </Link>
               <Link href="/terms" className="text-gray-400 hover:text-cyber-blue transition-colors">
-                Terms of Service
+                {t('terms')}
               </Link>
             </div>
           </div>
