@@ -19,7 +19,7 @@ import {
   X,
 } from 'lucide-react';
 import PhoneNumberInput from '@/components/ui/PhoneNumberInput';
-import { useTranslations } from '@/lib/LanguageContext';
+import { useTranslations, useLanguage } from '@/lib/LanguageContext';
 import jobsData from '@/data/jobs.json';
 // Email sending via API route
 
@@ -55,8 +55,42 @@ export default function CareersPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [cvFile, setCvFile] = useState<File | null>(null);
   const t = useTranslations('careers');
+  
+  // Get messages to access raw job data
+  const { messages } = useLanguage();
 
   const jobs = jobsData as Job[];
+  
+  // Function to get translated job data
+  const getTranslatedJobData = (jobId: string) => {
+    try {
+      const jobsData = (messages as any).careers?.jobs;
+      if (jobsData?.[jobId]) {
+        return jobsData[jobId];
+      }
+    } catch (e) {
+      // Translation key doesn't exist, fall back to original
+    }
+    return null;
+  };
+  
+  // Function to get translated job title
+  const getJobTitle = (title: string, jobId: string) => {
+    const translatedData = getTranslatedJobData(jobId);
+    if (translatedData && translatedData.title) {
+      return translatedData.title;
+    }
+    return title;
+  };
+  
+  // Function to get translated job description
+  const getJobDescription = (description: string, jobId: string) => {
+    const translatedData = getTranslatedJobData(jobId);
+    if (translatedData && translatedData.description) {
+      return translatedData.description;
+    }
+    return description;
+  };
 
   const {
     register,
@@ -290,9 +324,9 @@ export default function CareersPage() {
                       </div>
 
                       <h3 className="text-2xl font-bold mb-2 group-hover:text-gradient transition-all">
-                        {job.title}
+                        {getJobTitle(job.title, job.id)}
                       </h3>
-                      <p className="text-gray-400 mb-3">{job.description}</p>
+                      <p className="text-gray-400 mb-3">{getJobDescription(job.description, job.id)}</p>
                       <p className="text-sm text-gray-500">
                         {t('posted')}: {job.experience}
                       </p>

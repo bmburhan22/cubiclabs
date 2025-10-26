@@ -17,7 +17,7 @@ import {
   CheckCircle,
 } from 'lucide-react';
 import PhoneNumberInput from '@/components/ui/PhoneNumberInput';
-import { useTranslations } from '@/lib/LanguageContext';
+import { useTranslations, useLanguage } from '@/lib/LanguageContext';
 import jobsData from '@/data/jobs.json';
 // Email sending via API route
 
@@ -57,6 +57,9 @@ export default function JobApplicationPage({
   const [isLoading, setIsLoading] = useState(true);
   const t = useTranslations('careers');
   const tCommon = useTranslations('common');
+  
+  // Get messages to access raw job data
+  const { messages } = useLanguage();
 
   const jobs = jobsData as Job[];
 
@@ -78,17 +81,25 @@ export default function JobApplicationPage({
   const countryCode = watch('countryCode');
   const phone = watch('phone');
 
+  // Function to get translated job data
+  const getTranslatedJobData = (jobId: string) => {
+    try {
+      // Access nested job data from messages object
+      const jobsData = (messages as any).careers?.jobs;
+      if (jobsData?.[jobId]) {
+        return jobsData[jobId];
+      }
+    } catch (e) {
+      // Translation key doesn't exist, fall back to original
+    }
+    return null;
+  };
+
   // Function to get translated job title
-  const getJobTitle = (title: string) => {
-    const titleLower = title.toLowerCase();
-    if (titleLower.includes('front end developer') || titleLower.includes('frontend developer')) {
-      return t('jobs.frontEndDeveloper') || title;
-    }
-    if (titleLower.includes('back end developer') || titleLower.includes('backend developer')) {
-      return t('jobs.backEndDeveloper') || title;
-    }
-    if (titleLower.includes('full stack developer') || titleLower.includes('fullstack developer')) {
-      return t('jobs.fullStackDeveloper') || title;
+  const getJobTitle = (title: string, jobId: string) => {
+    const translatedData = getTranslatedJobData(jobId);
+    if (translatedData && translatedData.title) {
+      return translatedData.title;
     }
     return title;
   };
@@ -244,52 +255,69 @@ export default function JobApplicationPage({
                 </span>
               </div>
 
-              <h1 className="text-4xl font-bold mb-4">{getJobTitle(job.title)}</h1>
-              <p className="text-gray-300 text-lg mb-6">{job.description}</p>
+              <h1 className="text-4xl font-bold mb-4">{getJobTitle(job.title, job.id)}</h1>
+              <p className="text-gray-300 text-lg mb-6">
+                {(() => {
+                  const translatedData = getTranslatedJobData(job.id);
+                  return translatedData?.description || job.description;
+                })()}
+              </p>
 
               <div className="space-y-6">
                 <div>
                   <h2 className="text-2xl font-semibold mb-3">{t('responsibilities')}</h2>
                   <ul className="space-y-2">
-                    {job.responsibilities.map((item, index) => (
-                      <li key={index} className="flex items-start gap-3">
-                        <CheckCircle
-                          size={20}
-                          className="text-cyber-blue mt-1 flex-shrink-0"
-                        />
-                        <span className="text-gray-300">{item}</span>
-                      </li>
-                    ))}
+                    {(() => {
+                      const translatedData = getTranslatedJobData(job.id);
+                      const items = translatedData?.responsibilities || job.responsibilities;
+                      return items.map((item: string, index: number) => (
+                        <li key={index} className="flex items-start gap-3">
+                          <CheckCircle
+                            size={20}
+                            className="text-cyber-blue mt-1 flex-shrink-0"
+                          />
+                          <span className="text-gray-300">{item}</span>
+                        </li>
+                      ));
+                    })()}
                   </ul>
                 </div>
 
                 <div>
                   <h2 className="text-2xl font-semibold mb-3">{t('requirements')}</h2>
                   <ul className="space-y-2">
-                    {job.requirements.map((item, index) => (
-                      <li key={index} className="flex items-start gap-3">
-                        <CheckCircle
-                          size={20}
-                          className="text-cyber-pink mt-1 flex-shrink-0"
-                        />
-                        <span className="text-gray-300">{item}</span>
-                      </li>
-                    ))}
+                    {(() => {
+                      const translatedData = getTranslatedJobData(job.id);
+                      const items = translatedData?.requirements || job.requirements;
+                      return items.map((item: string, index: number) => (
+                        <li key={index} className="flex items-start gap-3">
+                          <CheckCircle
+                            size={20}
+                            className="text-cyber-pink mt-1 flex-shrink-0"
+                          />
+                          <span className="text-gray-300">{item}</span>
+                        </li>
+                      ));
+                    })()}
                   </ul>
                 </div>
 
                 <div>
                   <h2 className="text-2xl font-semibold mb-3">{t('benefits')}</h2>
                   <ul className="space-y-2">
-                    {job.benefits.map((item, index) => (
-                      <li key={index} className="flex items-start gap-3">
-                        <CheckCircle
-                          size={20}
-                          className="text-purple-400 mt-1 flex-shrink-0"
-                        />
-                        <span className="text-gray-300">{item}</span>
-                      </li>
-                    ))}
+                    {(() => {
+                      const translatedData = getTranslatedJobData(job.id);
+                      const items = translatedData?.benefits || job.benefits;
+                      return items.map((item: string, index: number) => (
+                        <li key={index} className="flex items-start gap-3">
+                          <CheckCircle
+                            size={20}
+                            className="text-purple-400 mt-1 flex-shrink-0"
+                          />
+                          <span className="text-gray-300">{item}</span>
+                        </li>
+                      ));
+                    })()}
                   </ul>
                 </div>
               </div>
@@ -313,7 +341,7 @@ export default function JobApplicationPage({
                     <label className="block text-xs font-medium text-gray-400 mb-1">
                       {t('position')}
                     </label>
-                    <p className="text-sm font-semibold text-white">{getJobTitle(job.title)}</p>
+                    <p className="text-sm font-semibold text-white">{getJobTitle(job.title, job.id)}</p>
                   </div>
                   <div>
                     <label className="block text-xs font-medium text-gray-400 mb-1">

@@ -305,7 +305,94 @@
       "fullStackDeveloper": "Full Stack Developer",
       "frontEndDesc": "Craft responsive, accessible, and high-performing web and mobile interfaces with modern frameworks.",
       "backEndDesc": "Build and maintain secure, scalable server-side applications for web and mobile platforms.",
-      "fullStackDesc": "Develop end-to-end features across both front-end and back-end to create seamless digital experiences."
+      "fullStackDesc": "Develop end-to-end features across both front-end and back-end to create seamless digital experiences.",
+      "job001": {
+        "title": "Front End Developer",
+        "description": "We're looking for a Front End Developer to craft responsive, accessible, and high-performing web and mobile interfaces. You'll work closely with our design and backend teams to turn ideas into engaging user experiences.",
+        "responsibilities": [
+          "Build responsive and accessible web and mobile interfaces",
+          "Transform design mockups into pixel-perfect, interactive experiences",
+          "Optimize applications for maximum speed and performance",
+          "Collaborate with design and backend teams on feature implementation",
+          "Ensure cross-browser and cross-device compatibility",
+          "Write clean, maintainable, and well-documented code"
+        ],
+        "requirements": [
+          "Strong skills in HTML, CSS, and JavaScript",
+          "Experience with front-end frameworks (React, Vue, or Angular)",
+          "Understanding of responsive and mobile-first design",
+          "Familiarity with version control (Git)",
+          "Knowledge of modern CSS preprocessors and build tools",
+          "Excellent attention to detail and problem-solving skills"
+        ],
+        "benefits": [
+          "Competitive salary and benefits",
+          "Health and wellness insurance",
+          "Flexible work hours",
+          "Professional development opportunities",
+          "Modern tech stack and tools",
+          "Collaborative and innovative team"
+        ]
+      },
+      "job002": {
+        "title": "Back End Developer",
+        "description": "We're looking for a Backend Developer to build and maintain the server-side of our web and mobile applications. You'll work with our team to create secure, scalable, and high-performance solutions.",
+        "responsibilities": [
+          "Develop and maintain server-side application logic",
+          "Design and implement RESTful APIs for web and mobile applications",
+          "Build secure and scalable backend systems",
+          "Optimize database queries and ensure data integrity",
+          "Collaborate with frontend teams to integrate APIs",
+          "Implement authentication and authorization systems",
+          "Monitor application performance and troubleshoot issues"
+        ],
+        "requirements": [
+          "Proficiency in Node.js, Python, PHP, or Java",
+          "Experience with databases (MySQL, PostgreSQL, or MongoDB)",
+          "Knowledge of REST APIs and Git",
+          "Problem-solving mindset and attention to security",
+          "Understanding of server-side best practices",
+          "Experience with cloud platforms and deployment"
+        ],
+        "benefits": [
+          "Competitive salary and benefits",
+          "Health and wellness insurance",
+          "Flexible work hours",
+          "Professional development opportunities",
+          "Modern tech stack and tools",
+          "Collaborative and innovative team"
+        ]
+      },
+      "job003": {
+        "title": "Full Stack Developer",
+        "description": "We're looking for a Full Stack Developer to build and maintain both the front-end and back-end of our web and mobile applications. You'll work across the stack to create secure, scalable, and seamless digital experiences.",
+        "responsibilities": [
+          "Develop end-to-end features across frontend and backend",
+          "Build responsive web interfaces using modern frameworks",
+          "Design and implement RESTful APIs and database solutions",
+          "Ensure seamless integration between frontend and backend systems",
+          "Optimize applications for performance and scalability",
+          "Collaborate with cross-functional teams on product features",
+          "Write clean, maintainable, and well-documented code"
+        ],
+        "requirements": [
+          "Proficiency in JavaScript, Node.js, React, or similar frameworks",
+          "Experience with databases (MySQL, PostgreSQL, or MongoDB)",
+          "Knowledge of REST APIs, Git, and responsive design",
+          "Problem-solving mindset and attention to security",
+          "Strong understanding of both frontend and backend technologies",
+          "Experience with modern development workflows and tools"
+        ],
+        "benefits": [
+          "Competitive salary and benefits",
+          "Health and wellness insurance",
+          "Flexible work hours",
+          "Professional development opportunities",
+          "Modern tech stack and tools",
+          "Collaborative and innovative team",
+          "Opportunity to work on diverse projects across the stack"
+        ]
+      }
     }
   },
   "contact": {
