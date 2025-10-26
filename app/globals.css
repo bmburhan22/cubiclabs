@@ -136,6 +136,19 @@ body {
   margin-right: 1.5rem;
 }
 
+/* Fix PhoneNumberInput and form elements for RTL */
+[dir="rtl"] select {
+  text-align: right;
+}
+
+[dir="rtl"] input {
+  text-align: right;
+}
+
+[dir="rtl"] .PhoneNumberInput {
+  direction: ltr;
+}
+
 /* Font switching based on language */
 html[lang="ar"] body {
   font-family: var(--font-cairo), sans-serif;

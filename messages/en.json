@@ -137,7 +137,30 @@
     "posted": "Posted",
     "responsibilities": "Responsibilities",
     "requirements": "Requirements",
-    "benefits": "What We Offer"
+    "benefits": "What We Offer",
+    "position": "Position",
+    "jobId": "Job ID",
+    "phone": "Phone Number",
+    "loadingJobDetails": "Loading job details...",
+    "jobNotFound": "Job Not Found",
+    "jobNotFoundDesc": "The position you're looking for doesn't exist or has been filled.",
+    "backToCareers": "Back to Careers",
+    "viewAllPositions": "View All Positions",
+    "fullName": "Full Name",
+    "cvResume": "CV/Resume",
+    "uploadCv": "Upload PDF or Word (Max 5MB)",
+    "coverLetter": "Cover Letter (Optional)",
+    "coverLetterPlaceholder": "Tell us why you're a great fit...",
+    "submitApplication": "Submit Application",
+    "submitting": "Submitting...",
+    "jobs": {
+      "frontEndDeveloper": "Front End Developer",
+      "backEndDeveloper": "Back End Developer",
+      "fullStackDeveloper": "Full Stack Developer",
+      "frontEndDesc": "Craft responsive, accessible, and high-performing web and mobile interfaces with modern frameworks.",
+      "backEndDesc": "Build and maintain secure, scalable server-side applications for web and mobile platforms.",
+      "fullStackDesc": "Develop end-to-end features across both front-end and back-end to create seamless digital experiences."
+    }
   },
   "contact": {
     "title": "Get In Touch",
@@ -219,6 +242,7 @@
     "filter": "Filter",
     "sort": "Sort",
     "notFound": "Not Found",
-    "backHome": "Back to Home"
+    "backHome": "Back to Home",
+    "companyName": "Cubiclabs"
   }
 }

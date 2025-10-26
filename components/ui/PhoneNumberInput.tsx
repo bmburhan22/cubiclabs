@@ -1,5 +1,5 @@
 import { forwardRef } from 'react';
-import { getCountries, getCountryCallingCode } from 'libphonenumber-js';
+import { getCountries, getCountryCallingCode, type CountryCode } from 'libphonenumber-js';
 
 // Get flag emoji from country code
 const getCountryFlag = (countryCode: string): string => {
@@ -14,12 +14,11 @@ const getCountryFlag = (countryCode: string): string => {
   }
 };
 
-// Get all countries with their calling codes, sorted with popular ones first
+// Get all countries with their calling codes
 const getCountryCodes = () => {
   const countries = getCountries();
-  const popularCountries = ['KW', 'US', 'AE', 'SA', 'QA', 'BH', 'OM', 'GB', 'FR', 'DE', 'IT', 'ES', 'CN', 'IN', 'JP', 'KR'];
   
-  const popularCodes = popularCountries.map(code => {
+  return countries.map(code => {
     const callingCode = getCountryCallingCode(code);
     return {
       code: callingCode,
@@ -29,25 +28,9 @@ const getCountryCodes = () => {
       displayCode: `+${callingCode}`,
     };
   });
-  
-  const otherCodes = countries
-    .filter(code => !popularCountries.includes(code))
-    .map(code => {
-      const callingCode = getCountryCallingCode(code);
-      return {
-        code: callingCode,
-        country: code,
-        name: new Intl.DisplayNames(['en'], { type: 'region' }).of(code) || code,
-        flag: getCountryFlag(code),
-        displayCode: `+${callingCode}`,
-      };
-    })
-    .sort((a, b) => a.name.localeCompare(b.name));
-  
-  return [...popularCodes, ...otherCodes];
 };
 
-  const countryCodes = getCountryCodes();
+const countryCodes = getCountryCodes();
 
 interface PhoneNumberInputProps {
   id?: string;
@@ -78,7 +61,7 @@ const PhoneNumberInput = forwardRef<HTMLInputElement, PhoneNumberInputProps>(
     const isSmallForm = className.includes('text-sm');
     
     return (
-      <div className={`flex ${isSmallForm ? 'gap-1' : 'gap-2'} ${className}`}>
+      <div className={`flex ${isSmallForm ? 'gap-1' : 'gap-2'} PhoneNumberInput ${className}`}>
         {/* Country Code */}
         <select
           value={countryCodeValue}

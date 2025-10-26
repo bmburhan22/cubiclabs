@@ -9,6 +9,7 @@ export default function Footer() {
   const currentYear = new Date().getFullYear();
   const t = useTranslations('footer');
   const tNav = useTranslations('nav');
+  const tCommon = useTranslations('common');
 
   const socialLinks = [
     { icon: Instagram, href: 'https://www.instagram.com/cubic_labs/', label: 'Instagram' },
@@ -39,7 +40,7 @@ export default function Footer() {
               <div className="w-10 h-10 bg-gradient-to-br from-cyber-blue to-cyber-pink rounded-lg flex items-center justify-center">
                 <span className="text-xl font-bold">C</span>
               </div>
-              <span className="text-xl font-bold text-gradient">Cubiclabs</span>
+              <span className="text-xl font-bold text-gradient">{tCommon('companyName')}</span>
             </div>
             <p className="text-gray-400 text-sm">
               {t('tagline')}

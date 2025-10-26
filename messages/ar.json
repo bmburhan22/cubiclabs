@@ -137,7 +137,30 @@
     "posted": "تاريخ النشر",
     "responsibilities": "المسؤوليات",
     "requirements": "المتطلبات",
-    "benefits": "ما نقدمه"
+    "benefits": "ما نقدمه",
+    "position": "الوظيفة",
+    "jobId": "رقم الوظيفة",
+    "phone": "رقم الهاتف",
+    "loadingJobDetails": "جاري تحميل تفاصيل الوظيفة...",
+    "jobNotFound": "الوظيفة غير موجودة",
+    "jobNotFoundDesc": "الوظيفة التي تبحث عنها غير موجودة أو تم شغلها.",
+    "backToCareers": "العودة إلى الوظائف",
+    "viewAllPositions": "عرض جميع الوظائف",
+    "fullName": "الاسم الكامل",
+    "cvResume": "السيرة الذاتية",
+    "uploadCv": "تحميل PDF أو Word (حد أقصى 5 ميجابايت)",
+    "coverLetter": "خطاب التغطية (اختياري)",
+    "coverLetterPlaceholder": "أخبرنا لماذا أنت مناسب لهذا الدور...",
+    "submitApplication": "إرسال الطلب",
+    "submitting": "جاري الإرسال...",
+    "jobs": {
+      "frontEndDeveloper": "مطور الواجهات الأمامية",
+      "backEndDeveloper": "مطور الواجهات الخلفية",
+      "fullStackDeveloper": "مطور Full Stack",
+      "frontEndDesc": "إنشاء واجهات ويب وهواتف محمولة متجاوبة وسهلة الوصول وعالية الأداء باستخدام React وVue وAngular.",
+      "backEndDesc": "إنشاء وصيانة تطبيقات من نوع Node.js وPython وPHP وJava آمنة وقابلة للتطوير لمواقع الويب والهواتف المحمولة.",
+      "fullStackDesc": "تطوير ميزات كاملة من أولها لآخرها عبر الواجهات الأمامية والخلفية لإنشاء تجارب رقمية سلسة باستخدام JavaScript وNode.js وReact."
+    }
   },
   "contact": {
     "title": "تواصل معنا",
@@ -219,6 +242,7 @@
     "filter": "تصفية",
     "sort": "ترتيب",
     "notFound": "غير موجود",
-    "backHome": "العودة للرئيسية"
+    "backHome": "العودة للرئيسية",
+    "companyName": "كيوبك لابز"
   }
 }

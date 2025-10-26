@@ -11,6 +11,7 @@ export default function Navbar() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const t = useTranslations('nav');
+  const tCommon = useTranslations('common');
 
   const navLinks = [
     { href: '/', label: t('home') },
@@ -55,7 +56,7 @@ export default function Navbar() {
               <div className="absolute inset-0 bg-gradient-apple-br rounded-lg blur-md opacity-50 group-hover:opacity-75 transition-opacity -z-10"></div>
             </motion.div>
             <span className="text-xl font-bold text-gradient hidden sm:inline">
-              Cubiclabs
+              {tCommon('companyName')}
             </span>
           </Link>
 

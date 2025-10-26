@@ -19,6 +19,7 @@ import {
   X,
 } from 'lucide-react';
 import PhoneNumberInput from '@/components/ui/PhoneNumberInput';
+import { useTranslations } from '@/lib/LanguageContext';
 import jobsData from '@/data/jobs.json';
 // Email sending via API route
 
@@ -53,6 +54,7 @@ export default function CareersPage() {
   const [showGeneralForm, setShowGeneralForm] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [cvFile, setCvFile] = useState<File | null>(null);
+  const t = useTranslations('careers');
 
   const jobs = jobsData as Job[];
 

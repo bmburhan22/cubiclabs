@@ -17,6 +17,7 @@ import {
   CheckCircle,
 } from 'lucide-react';
 import PhoneNumberInput from '@/components/ui/PhoneNumberInput';
+import { useTranslations } from '@/lib/LanguageContext';
 import jobsData from '@/data/jobs.json';
 // Email sending via API route
 
@@ -54,6 +55,8 @@ export default function JobApplicationPage({
   const [cvFile, setCvFile] = useState<File | null>(null);
   const [job, setJob] = useState<Job | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const t = useTranslations('careers');
+  const tCommon = useTranslations('common');
 
   const jobs = jobsData as Job[];
 
@@ -74,6 +77,21 @@ export default function JobApplicationPage({
 
   const countryCode = watch('countryCode');
   const phone = watch('phone');
+
+  // Function to get translated job title
+  const getJobTitle = (title: string) => {
+    const titleLower = title.toLowerCase();
+    if (titleLower.includes('front end developer') || titleLower.includes('frontend developer')) {
+      return t('jobs.frontEndDeveloper') || title;
+    }
+    if (titleLower.includes('back end developer') || titleLower.includes('backend developer')) {
+      return t('jobs.backEndDeveloper') || title;
+    }
+    if (titleLower.includes('full stack developer') || titleLower.includes('fullstack developer')) {
+      return t('jobs.fullStackDeveloper') || title;
+    }
+    return title;
+  };
 
   useEffect(() => {
     // Simulate a small delay to show loading state
@@ -154,7 +172,7 @@ export default function JobApplicationPage({
       <div className="min-h-screen pt-20 flex items-center justify-center">
         <div className="text-center">
           <div className="w-16 h-16 border-4 border-cyber-blue border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-gray-400">Loading job details...</p>
+          <p className="text-gray-400">{t('loadingJobDetails')}</p>
         </div>
       </div>
     );
@@ -164,9 +182,9 @@ export default function JobApplicationPage({
     return (
       <div className="min-h-screen pt-20 flex items-center justify-center">
         <div className="text-center">
-          <h1 className="text-4xl font-bold mb-4">Job Not Found</h1>
+          <h1 className="text-4xl font-bold mb-4">{t('jobNotFound')}</h1>
           <p className="text-gray-400 mb-8">
-            The position you&apos;re looking for doesn&apos;t exist or has been filled.
+            {t('jobNotFoundDesc')}
           </p>
           <Link href="/careers">
             <motion.button
@@ -174,7 +192,7 @@ export default function JobApplicationPage({
               whileTap={{ scale: 0.95 }}
               className="px-6 py-3 bg-gradient-to-r from-cyber-blue to-cyber-pink rounded-lg font-semibold"
             >
-              View All Positions
+              {t('viewAllPositions')}
             </motion.button>
           </Link>
         </div>
@@ -195,7 +213,7 @@ export default function JobApplicationPage({
             className="flex items-center gap-2 text-cyber-blue hover:text-cyber-pink transition-colors mb-8"
           >
             <ArrowLeft size={20} />
-            Back to Careers
+            {t('backToCareers')}
           </motion.button>
         </Link>
 
@@ -226,12 +244,12 @@ export default function JobApplicationPage({
                 </span>
               </div>
 
-              <h1 className="text-4xl font-bold mb-4">{job.title}</h1>
+              <h1 className="text-4xl font-bold mb-4">{getJobTitle(job.title)}</h1>
               <p className="text-gray-300 text-lg mb-6">{job.description}</p>
 
               <div className="space-y-6">
                 <div>
-                  <h2 className="text-2xl font-semibold mb-3">Responsibilities</h2>
+                  <h2 className="text-2xl font-semibold mb-3">{t('responsibilities')}</h2>
                   <ul className="space-y-2">
                     {job.responsibilities.map((item, index) => (
                       <li key={index} className="flex items-start gap-3">
@@ -246,7 +264,7 @@ export default function JobApplicationPage({
                 </div>
 
                 <div>
-                  <h2 className="text-2xl font-semibold mb-3">Requirements</h2>
+                  <h2 className="text-2xl font-semibold mb-3">{t('requirements')}</h2>
                   <ul className="space-y-2">
                     {job.requirements.map((item, index) => (
                       <li key={index} className="flex items-start gap-3">
@@ -261,7 +279,7 @@ export default function JobApplicationPage({
                 </div>
 
                 <div>
-                  <h2 className="text-2xl font-semibold mb-3">Benefits</h2>
+                  <h2 className="text-2xl font-semibold mb-3">{t('benefits')}</h2>
                   <ul className="space-y-2">
                     {job.benefits.map((item, index) => (
                       <li key={index} className="flex items-start gap-3">
@@ -286,20 +304,20 @@ export default function JobApplicationPage({
               transition={{ duration: 0.8, delay: 0.2 }}
               className="glass p-6 rounded-2xl sticky top-24"
             >
-              <h2 className="text-2xl font-bold mb-6">Apply for this Position</h2>
+              <h2 className="text-2xl font-bold mb-6">{t('applyNow')}</h2>
 
               <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
                 {/* Job Information - Auto-filled */}
                 <div className="bg-gradient-to-r from-cyber-blue/10 to-cyber-pink/10 p-4 rounded-lg border border-cyber-blue/30 space-y-2">
                   <div>
                     <label className="block text-xs font-medium text-gray-400 mb-1">
-                      Position
+                      {t('position')}
                     </label>
-                    <p className="text-sm font-semibold text-white">{job.title}</p>
+                    <p className="text-sm font-semibold text-white">{getJobTitle(job.title)}</p>
                   </div>
                   <div>
                     <label className="block text-xs font-medium text-gray-400 mb-1">
-                      Job ID
+                      {t('jobId')}
                     </label>
                     <p className="text-sm font-mono text-cyber-blue">{job.id}</p>
                   </div>
@@ -308,7 +326,7 @@ export default function JobApplicationPage({
                 {/* Name */}
                 <div>
                   <label htmlFor="name" className="block text-sm font-medium mb-2">
-                    Full Name <span className="text-cyber-pink">*</span>
+                    {t('fullName')} <span className="text-cyber-pink">*</span>
                   </label>
                   <input
                     {...register('name')}
@@ -344,7 +362,7 @@ export default function JobApplicationPage({
                 {/* Phone */}
                 <div>
                   <label className="block text-sm font-medium mb-2">
-                    Phone Number <span className="text-cyber-pink">*</span>
+                    {t('phone')} <span className="text-cyber-pink">*</span>
                   </label>
                   <PhoneNumberInput
                     countryCodeValue={countryCode}
@@ -365,14 +383,14 @@ export default function JobApplicationPage({
                 {/* CV Upload */}
                 <div>
                   <label className="block text-sm font-medium mb-2">
-                    CV/Resume <span className="text-cyber-pink">*</span>
+                    {t('cvResume')} <span className="text-cyber-pink">*</span>
                   </label>
                   <label
                     htmlFor="cv"
                     className="flex items-center justify-center w-full px-4 py-3 rounded-lg glass-dark border border-white/10 hover:border-cyber-blue cursor-pointer transition-colors"
                   >
                     <Upload size={18} className="mr-2" />
-                    {cvFile ? cvFile.name : 'Upload PDF or Word (Max 5MB)'}
+                    {cvFile ? cvFile.name : t('uploadCv')}
                   </label>
                   <input
                     type="file"
@@ -386,14 +404,14 @@ export default function JobApplicationPage({
                 {/* Message */}
                 <div>
                   <label htmlFor="message" className="block text-sm font-medium mb-2">
-                    Cover Letter (Optional)
+                    {t('coverLetter')}
                   </label>
                   <textarea
                     {...register('message')}
                     id="message"
                     rows={3}
                     className="w-full px-4 py-2 rounded-lg glass-dark border border-white/10 focus:border-cyber-blue focus:outline-none transition-colors resize-none text-sm"
-                    placeholder="Tell us why you're a great fit..."
+                    placeholder={t('coverLetterPlaceholder')}
                   />
                 </div>
 
@@ -408,11 +426,11 @@ export default function JobApplicationPage({
                   {isSubmitting ? (
                     <>
                       <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
-                      Submitting...
+                      {t('submitting')}
                     </>
                   ) : (
                     <>
-                      Submit Application
+                      {t('submitApplication')}
                       <Send size={18} />
                     </>
                   )}
