@@ -382,26 +382,27 @@ export default function CareersPage() {
               animate={{ scale: 1, opacity: 1 }}
               exit={{ scale: 0.9, opacity: 0 }}
               onClick={(e) => e.stopPropagation()}
-              className="glass-dark p-8 rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto cyber-border"
+              className="glass-dark rounded-2xl max-w-2xl w-full max-h-[90vh] cyber-border overflow-hidden"
             >
-              {/* Header */}
-              <div className="flex justify-between items-center mb-6">
-                <div>
-                  <h2 className="text-3xl font-bold mb-2">General Application</h2>
-                  <p className="text-gray-400">
-                    Don&apos;t see a specific role? Apply here and we&apos;ll consider you for future opportunities.
-                  </p>
+              <div className="max-h-[90vh] overflow-y-auto p-8">
+                {/* Header */}
+                <div className="flex justify-between items-center mb-6">
+                  <div>
+                    <h2 className="text-3xl font-bold mb-2">General Application</h2>
+                    <p className="text-gray-400">
+                      Don&apos;t see a specific role? Apply here and we&apos;ll consider you for future opportunities.
+                    </p>
+                  </div>
+                  <button
+                    onClick={() => setShowGeneralForm(false)}
+                    className="p-2 hover:bg-white/10 rounded-lg transition-colors"
+                  >
+                    <X size={24} />
+                  </button>
                 </div>
-                <button
-                  onClick={() => setShowGeneralForm(false)}
-                  className="p-2 hover:bg-white/10 rounded-lg transition-colors"
-                >
-                  <X size={24} />
-                </button>
-              </div>
 
-              {/* Form */}
-              <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+                {/* Form */}
+                <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
                 {/* Auto-filled Job Info */}
                 <div className="bg-gradient-to-r from-purple-500/10 to-pink-500/10 p-4 rounded-lg border border-purple-500/30">
                   <p className="text-sm font-semibold text-purple-300">
@@ -561,6 +562,7 @@ export default function CareersPage() {
                   </motion.button>
                 </div>
               </form>
+              </div>
             </motion.div>
           </motion.div>
         )}
