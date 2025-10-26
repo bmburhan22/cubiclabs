@@ -35,7 +35,7 @@ export default function ServicesPage() {
   return (
     <div className="relative min-h-screen pt-20">
       {/* Background */}
-      <div className="absolute inset-0 grid-background opacity-20"></div>
+      <div className="absolute inset-0 grid-background opacity-20 -z-10"></div>
 
       {/* Hero Section */}
       <section className="relative py-20">
@@ -99,14 +99,15 @@ export default function ServicesPage() {
             <p className="text-gray-300 text-lg mb-8">
               Let's discuss how we can help bring your vision to life
             </p>
-            <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
-              <Link
-                href="/contact"
-                className="inline-block px-8 py-4 bg-gradient-to-r from-cyber-blue to-cyber-pink rounded-lg font-semibold text-lg"
+            <Link href="/contact">
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="relative z-10 px-8 py-4 bg-gradient-to-r from-cyber-blue to-cyber-pink rounded-lg font-semibold text-lg"
               >
                 Contact Us
-              </Link>
-            </motion.div>
+              </motion.button>
+            </Link>
           </motion.div>
         </div>
       </section>

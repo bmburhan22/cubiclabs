@@ -90,7 +90,7 @@ export default function PricingPage() {
   return (
     <div className="relative min-h-screen pt-20">
       {/* Background */}
-      <div className="absolute inset-0 grid-background opacity-20"></div>
+      <div className="absolute inset-0 grid-background opacity-20 -z-10"></div>
 
       {/* Hero Section */}
       <section className="relative py-20">
@@ -259,7 +259,7 @@ export default function PricingPage() {
               <motion.button
                 whileHover={{ scale: 1.05 }}
                 whileTap={{ scale: 0.95 }}
-                className="px-8 py-4 bg-gradient-to-r from-cyber-blue to-cyber-pink rounded-lg font-semibold text-lg"
+                className="relative z-10 px-8 py-4 bg-gradient-to-r from-cyber-blue to-cyber-pink rounded-lg font-semibold text-lg"
               >
                 Contact Us
               </motion.button>
