@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { useForm, Controller } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import toast from 'react-hot-toast';
@@ -16,7 +16,7 @@ import {
   Send,
   CheckCircle,
 } from 'lucide-react';
-import { PhoneInput } from 'react-international-phone';
+import PhoneNumberInput from '@/components/ui/PhoneNumberInput';
 import jobsData from '@/data/jobs.json';
 // Email sending via API route
 
@@ -38,7 +38,8 @@ interface Job {
 const applicationSchema = z.object({
   name: z.string().min(2, 'Name must be at least 2 characters'),
   email: z.string().email('Invalid email address'),
-  phone: z.string().min(8, 'Please enter a valid phone number'),
+  countryCode: z.string().min(1, 'Please select a country code'),
+  phone: z.string().min(4, 'Phone number must be at least 4 digits').regex(/^[0-9]+$/, 'Phone number must contain only digits'),
   message: z.string().optional(),
 });
 
@@ -52,6 +53,7 @@ export default function JobApplicationPage({
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [cvFile, setCvFile] = useState<File | null>(null);
   const [job, setJob] = useState<Job | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   const jobs = jobsData as Job[];
 
@@ -59,18 +61,29 @@ export default function JobApplicationPage({
     register,
     handleSubmit,
     reset,
-    control,
+    watch,
+    setValue,
     formState: { errors },
   } = useForm<ApplicationFormData>({
     resolver: zodResolver(applicationSchema),
     defaultValues: {
+      countryCode: '+965',
       phone: '',
     },
   });
 
+  const countryCode = watch('countryCode');
+  const phone = watch('phone');
+
   useEffect(() => {
-    const foundJob = jobs.find((j) => j.id === params.jobId);
-    setJob(foundJob || null);
+    // Simulate a small delay to show loading state
+    const timer = setTimeout(() => {
+      const foundJob = jobs.find((j) => j.id === params.jobId);
+      setJob(foundJob || null);
+      setIsLoading(false);
+    }, 100);
+
+    return () => clearTimeout(timer);
   }, [params.jobId, jobs]);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -103,7 +116,7 @@ export default function JobApplicationPage({
       const formData = new FormData();
       formData.append('name', data.name);
       formData.append('email', data.email);
-      formData.append('phone', data.phone);
+      formData.append('phone', `${data.countryCode}${data.phone}`);
       formData.append('message', data.message || '');
       formData.append('jobId', job.id);
       formData.append('jobTitle', job.title);
@@ -135,6 +148,17 @@ export default function JobApplicationPage({
 
     setIsSubmitting(false);
   };
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen pt-20 flex items-center justify-center">
+        <div className="text-center">
+          <div className="w-16 h-16 border-4 border-cyber-blue border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
+          <p className="text-gray-400">Loading job details...</p>
+        </div>
+      </div>
+    );
+  }
 
   if (!job) {
     return (
@@ -322,21 +346,18 @@ export default function JobApplicationPage({
                   <label className="block text-sm font-medium mb-2">
                     Phone Number <span className="text-cyber-pink">*</span>
                   </label>
-                  <Controller
-                    name="phone"
-                    control={control}
-                    render={({ field: { onChange, value } }) => (
-                      <PhoneInput
-                        value={value}
-                        onChange={onChange}
-                        defaultCountry="kw"
-                        className="international-phone-input"
-                      />
-                    )}
+                  <PhoneNumberInput
+                    countryCodeValue={countryCode}
+                    phoneValue={phone}
+                    onCountryCodeChange={(value) => setValue('countryCode', value)}
+                    onPhoneChange={(value) => setValue('phone', value)}
+                    placeholder="123456789"
+                    className="text-sm"
+                    required
                   />
-                  {errors.phone && (
+                  {(errors.countryCode || errors.phone) && (
                     <p className="text-red-400 text-xs mt-1">
-                      {errors.phone.message}
+                      {errors.countryCode?.message || errors.phone?.message}
                     </p>
                   )}
                 </div>

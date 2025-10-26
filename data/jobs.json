@@ -1,130 +1,110 @@
 [
   {
     "id": "job-001",
-    "title": "Senior Full Stack Developer",
+    "title": "Front End Developer",
     "department": "Engineering",
-    "location": "Remote",
+    "location": "Kuwait City, Kuwait",
     "type": "Full-time",
-    "experience": "5+ years",
-    "description": "We're looking for an experienced Full Stack Developer to join our engineering team and help build cutting-edge web applications.",
+    "experience": "Senior Level",
+    "description": "We're looking for a Front End Developer to craft responsive, accessible, and high-performing web and mobile interfaces. You'll work closely with our design and backend teams to turn ideas into engaging user experiences.",
     "responsibilities": [
-      "Design and develop scalable web applications using modern frameworks",
-      "Collaborate with cross-functional teams to define and implement new features",
-      "Write clean, maintainable, and well-documented code",
-      "Participate in code reviews and mentor junior developers",
-      "Optimize applications for maximum speed and scalability"
+      "Build responsive and accessible web and mobile interfaces",
+      "Transform design mockups into pixel-perfect, interactive experiences",
+      "Optimize applications for maximum speed and performance",
+      "Collaborate with design and backend teams on feature implementation",
+      "Ensure cross-browser and cross-device compatibility",
+      "Write clean, maintainable, and well-documented code"
     ],
     "requirements": [
-      "5+ years of experience in full stack development",
-      "Strong proficiency in React, Node.js, and TypeScript",
-      "Experience with modern CSS frameworks (Tailwind, etc.)",
-      "Familiarity with cloud platforms (AWS, GCP, or Azure)",
-      "Excellent problem-solving and communication skills"
+      "Strong skills in HTML, CSS, and JavaScript",
+      "Experience with front-end frameworks (React, Vue, or Angular)",
+      "Understanding of responsive and mobile-first design",
+      "Familiarity with version control (Git)",
+      "Knowledge of modern CSS preprocessors and build tools",
+      "Excellent attention to detail and problem-solving skills"
     ],
     "benefits": [
-      "Competitive salary and equity",
-      "Health, dental, and vision insurance",
-      "Flexible work hours and remote work options",
-      "Professional development budget",
-      "Collaborative and innovative work environment"
+      "Competitive salary and benefits",
+      "Health and wellness insurance",
+      "Flexible work hours",
+      "Professional development opportunities",
+      "Modern tech stack and tools",
+      "Collaborative and innovative team"
     ],
     "isActive": true,
-    "postedDate": "2024-10-15"
+    "postedDate": "2024-12-01"
   },
   {
     "id": "job-002",
-    "title": "UI/UX Designer",
-    "department": "Design",
+    "title": "Back End Developer",
+    "department": "Engineering",
     "location": "Kuwait City, Kuwait",
     "type": "Full-time",
-    "experience": "3+ years",
-    "description": "Join our design team to create beautiful and intuitive user experiences for our products.",
+    "experience": "Senior Level",
+    "description": "We're looking for a Backend Developer to build and maintain the server-side of our web and mobile applications. You'll work with our team to create secure, scalable, and high-performance solutions.",
     "responsibilities": [
-      "Create wireframes, prototypes, and high-fidelity designs",
-      "Conduct user research and usability testing",
-      "Collaborate with developers to ensure design implementation",
-      "Maintain and evolve our design system",
-      "Present design concepts to stakeholders"
+      "Develop and maintain server-side application logic",
+      "Design and implement RESTful APIs for web and mobile applications",
+      "Build secure and scalable backend systems",
+      "Optimize database queries and ensure data integrity",
+      "Collaborate with frontend teams to integrate APIs",
+      "Implement authentication and authorization systems",
+      "Monitor application performance and troubleshoot issues"
     ],
     "requirements": [
-      "3+ years of UI/UX design experience",
-      "Proficiency in Figma, Sketch, or Adobe XD",
-      "Strong portfolio demonstrating design thinking",
-      "Understanding of modern web technologies",
-      "Excellent visual design skills"
+      "Proficiency in Node.js, Python, PHP, or Java",
+      "Experience with databases (MySQL, PostgreSQL, or MongoDB)",
+      "Knowledge of REST APIs and Git",
+      "Problem-solving mindset and attention to security",
+      "Understanding of server-side best practices",
+      "Experience with cloud platforms and deployment"
     ],
     "benefits": [
-      "Competitive salary",
-      "Health and wellness benefits",
-      "Creative and supportive team environment",
-      "Latest design tools and software",
-      "Flexible work arrangements"
+      "Competitive salary and benefits",
+      "Health and wellness insurance",
+      "Flexible work hours",
+      "Professional development opportunities",
+      "Modern tech stack and tools",
+      "Collaborative and innovative team"
     ],
     "isActive": true,
-    "postedDate": "2024-10-20"
+    "postedDate": "2024-12-01"
   },
   {
     "id": "job-003",
-    "title": "DevOps Engineer",
+    "title": "Full Stack Developer",
     "department": "Engineering",
-    "location": "Remote",
-    "type": "Full-time",
-    "experience": "4+ years",
-    "description": "We need a skilled DevOps Engineer to optimize our infrastructure and deployment processes.",
-    "responsibilities": [
-      "Design and maintain CI/CD pipelines",
-      "Manage cloud infrastructure and deployments",
-      "Implement monitoring and logging solutions",
-      "Ensure system security and compliance",
-      "Automate repetitive tasks and processes"
-    ],
-    "requirements": [
-      "4+ years of DevOps experience",
-      "Strong knowledge of Docker, Kubernetes, and cloud platforms",
-      "Experience with Infrastructure as Code (Terraform, CloudFormation)",
-      "Proficiency in scripting languages (Python, Bash)",
-      "Understanding of security best practices"
-    ],
-    "benefits": [
-      "Competitive compensation package",
-      "Comprehensive health benefits",
-      "Remote work flexibility",
-      "Learning and certification budget",
-      "Cutting-edge technology stack"
-    ],
-    "isActive": true,
-    "postedDate": "2024-10-18"
-  },
-  {
-    "id": "job-004",
-    "title": "Product Manager",
-    "department": "Product",
     "location": "Kuwait City, Kuwait",
     "type": "Full-time",
-    "experience": "5+ years",
-    "description": "Lead product strategy and development for our flagship products.",
+    "experience": "Senior Level",
+    "description": "We're looking for a Full Stack Developer to build and maintain both the front-end and back-end of our web and mobile applications. You'll work across the stack to create secure, scalable, and seamless digital experiences.",
     "responsibilities": [
-      "Define product vision and roadmap",
-      "Gather and prioritize product requirements",
-      "Work closely with engineering and design teams",
-      "Analyze market trends and user feedback",
-      "Drive product launches and go-to-market strategies"
+      "Develop end-to-end features across frontend and backend",
+      "Build responsive web interfaces using modern frameworks",
+      "Design and implement RESTful APIs and database solutions",
+      "Ensure seamless integration between frontend and backend systems",
+      "Optimize applications for performance and scalability",
+      "Collaborate with cross-functional teams on product features",
+      "Write clean, maintainable, and well-documented code"
     ],
     "requirements": [
-      "5+ years of product management experience",
-      "Strong analytical and strategic thinking skills",
-      "Experience with Agile methodologies",
-      "Excellent communication and leadership abilities",
-      "Technical background preferred"
+      "Proficiency in JavaScript, Node.js, React, or similar frameworks",
+      "Experience with databases (MySQL, PostgreSQL, or MongoDB)",
+      "Knowledge of REST APIs, Git, and responsive design",
+      "Problem-solving mindset and attention to security",
+      "Strong understanding of both frontend and backend technologies",
+      "Experience with modern development workflows and tools"
     ],
     "benefits": [
-      "Competitive salary with equity",
-      "Comprehensive benefits package",
-      "Opportunity to shape product direction",
-      "Collaborative work culture",
-      "Career growth opportunities"
+      "Competitive salary and benefits",
+      "Health and wellness insurance",
+      "Flexible work hours",
+      "Professional development opportunities",
+      "Modern tech stack and tools",
+      "Collaborative and innovative team",
+      "Opportunity to work on diverse projects across the stack"
     ],
     "isActive": true,
-    "postedDate": "2024-10-10"
+    "postedDate": "2024-12-01"
   }
 ]

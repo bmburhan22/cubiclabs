@@ -2,21 +2,35 @@
 
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { useForm, Controller } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import toast from 'react-hot-toast';
 import { Mail, MapPin, Phone, Send } from 'lucide-react';
-import { PhoneInput } from 'react-international-phone';
-import 'react-international-phone/style.css';
+import PhoneNumberInput from '@/components/ui/PhoneNumberInput';
+import { useTranslations } from '@/lib/LanguageContext';
 // Email sending via API route
 
 const contactSchema = z.object({
   name: z.string().min(2, 'Name must be at least 2 characters'),
   email: z.string().email('Invalid email address'),
+  countryCode: z.string(),
   phone: z.string().optional(),
   subject: z.string().min(3, 'Subject must be at least 3 characters'),
   message: z.string().min(10, 'Message must be at least 10 characters'),
+}).refine((data) => {
+  // If phone is provided, country code must be valid
+  if (data.phone && !data.countryCode) {
+    return false;
+  }
+  // If country code is provided, phone must also be provided
+  if (data.countryCode && data.countryCode !== '' && !data.phone) {
+    return false;
+  }
+  return true;
+}, {
+  message: "Please provide both country code and phone number",
+  path: ["phone"],
 });
 
 type ContactFormData = z.infer<typeof contactSchema>;
@@ -41,30 +55,42 @@ const contactInfo = [
 
 export default function ContactPage() {
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const t = useTranslations('contact');
 
   const {
     register,
     handleSubmit,
     reset,
-    control,
+    watch,
+    setValue,
     formState: { errors },
   } = useForm<ContactFormData>({
     resolver: zodResolver(contactSchema),
     defaultValues: {
+      countryCode: '+965',
       phone: '',
     },
   });
+
+  const countryCode = watch('countryCode');
+  const phone = watch('phone');
 
   const onSubmit = async (data: ContactFormData) => {
     setIsSubmitting(true);
 
     try {
+      // Combine country code and phone if both are provided
+      const { countryCode, phone, ...restData } = data;
+      const phoneData = phone ? 
+        { ...restData, phone: `${countryCode}${phone}` } : 
+        restData;
+
       const response = await fetch('/api/contact', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify(phoneData),
       });
 
       const result = await response.json();
@@ -97,14 +123,13 @@ export default function ContactPage() {
             className="text-center max-w-4xl mx-auto mb-16"
           >
             <div className="inline-block px-4 py-2 rounded-full glass mb-6">
-              <span className="text-cyber-blue font-semibold">Contact Us</span>
+              <span className="text-cyber-blue font-semibold">{t('title')}</span>
             </div>
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6">
-              Get In <span className="text-gradient">Touch</span>
+              <span className="text-gradient">{t('title')}</span>
             </h1>
             <p className="text-xl text-gray-300">
-              Have a question or want to work together? We&apos;d love to hear from
-              you.
+              {t('subtitle')}
             </p>
           </motion.div>
 
@@ -122,14 +147,14 @@ export default function ContactPage() {
                 {/* Name */}
                 <div>
                   <label htmlFor="name" className="block text-sm font-medium mb-2">
-                    Name <span className="text-cyber-pink">*</span>
+                    {t('name')} <span className="text-cyber-pink">*</span>
                   </label>
                   <input
                     {...register('name')}
                     type="text"
                     id="name"
                     className="w-full px-4 py-3 rounded-lg glass-dark border border-white/10 focus:border-cyber-blue focus:outline-none transition-colors"
-                    placeholder="Your name"
+                    placeholder={t('namePlaceholder')}
                   />
                   {errors.name && (
                     <p className="text-red-400 text-sm mt-1">{errors.name.message}</p>
@@ -139,14 +164,14 @@ export default function ContactPage() {
                 {/* Email */}
                 <div>
                   <label htmlFor="email" className="block text-sm font-medium mb-2">
-                    Email <span className="text-cyber-pink">*</span>
+                    {t('email')} <span className="text-cyber-pink">*</span>
                   </label>
                   <input
                     {...register('email')}
                     type="email"
                     id="email"
                     className="w-full px-4 py-3 rounded-lg glass-dark border border-white/10 focus:border-cyber-blue focus:outline-none transition-colors"
-                    placeholder="your.email@example.com"
+                    placeholder={t('emailPlaceholder')}
                   />
                   {errors.email && (
                     <p className="text-red-400 text-sm mt-1">{errors.email.message}</p>
@@ -156,38 +181,27 @@ export default function ContactPage() {
                 {/* Phone (Optional) */}
                 <div>
                   <label className="block text-sm font-medium mb-2">
-                    Phone Number (Optional)
+                    {t('phoneOptional')}
                   </label>
-                  <Controller
-                    name="phone"
-                    control={control}
-                    render={({ field: { onChange, value } }) => (
-                      <PhoneInput
-                        value={value}
-                        onChange={onChange}
-                        defaultCountry="kw"
-                        className="international-phone-input"
-                      />
-                    )}
+                  <PhoneNumberInput
+                    countryCodeValue={countryCode}
+                    phoneValue={phone}
+                    onCountryCodeChange={(value) => setValue('countryCode', value)}
+                    onPhoneChange={(value) => setValue('phone', value)}
                   />
-                  {errors.phone && (
-                    <p className="text-red-400 text-sm mt-1">
-                      {errors.phone.message}
-                    </p>
-                  )}
                 </div>
 
                 {/* Subject */}
                 <div>
                   <label htmlFor="subject" className="block text-sm font-medium mb-2">
-                    Subject <span className="text-cyber-pink">*</span>
+                    {t('subject')} <span className="text-cyber-pink">*</span>
                   </label>
                   <input
                     {...register('subject')}
                     type="text"
                     id="subject"
                     className="w-full px-4 py-3 rounded-lg glass-dark border border-white/10 focus:border-cyber-blue focus:outline-none transition-colors"
-                    placeholder="How can we help?"
+                    placeholder={t('subjectPlaceholder')}
                   />
                   {errors.subject && (
                     <p className="text-red-400 text-sm mt-1">
@@ -199,14 +213,14 @@ export default function ContactPage() {
                 {/* Message */}
                 <div>
                   <label htmlFor="message" className="block text-sm font-medium mb-2">
-                    Message <span className="text-cyber-pink">*</span>
+                    {t('message')} <span className="text-cyber-pink">*</span>
                   </label>
                   <textarea
                     {...register('message')}
                     id="message"
                     rows={5}
                     className="w-full px-4 py-3 rounded-lg glass-dark border border-white/10 focus:border-cyber-blue focus:outline-none transition-colors resize-none"
-                    placeholder="Tell us more about your project..."
+                    placeholder={t('messagePlaceholder')}
                   />
                   {errors.message && (
                     <p className="text-red-400 text-sm mt-1">
@@ -230,7 +244,7 @@ export default function ContactPage() {
                     </>
                   ) : (
                     <>
-                      Send Message
+                      {t('send')}
                       <Send size={18} />
                     </>
                   )}

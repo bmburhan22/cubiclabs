@@ -18,6 +18,7 @@ import {
   Send,
   X,
 } from 'lucide-react';
+import PhoneNumberInput from '@/components/ui/PhoneNumberInput';
 import jobsData from '@/data/jobs.json';
 // Email sending via API route
 
@@ -34,30 +35,6 @@ interface Job {
 }
 
 const departments = ['All', 'Engineering', 'Design', 'Product'];
-
-const countryCodes = [
-  { code: '+965', country: 'Kuwait' },
-  { code: '+1', country: 'US/Canada' },
-  { code: '+44', country: 'United Kingdom' },
-  { code: '+91', country: 'India' },
-  { code: '+86', country: 'China' },
-  { code: '+81', country: 'Japan' },
-  { code: '+49', country: 'Germany' },
-  { code: '+33', country: 'France' },
-  { code: '+61', country: 'Australia' },
-  { code: '+971', country: 'UAE' },
-  { code: '+966', country: 'Saudi Arabia' },
-  { code: '+20', country: 'Egypt' },
-  { code: '+27', country: 'South Africa' },
-  { code: '+234', country: 'Nigeria' },
-  { code: '+55', country: 'Brazil' },
-  { code: '+52', country: 'Mexico' },
-  { code: '+7', country: 'Russia' },
-  { code: '+82', country: 'South Korea' },
-  { code: '+65', country: 'Singapore' },
-  { code: '+60', country: 'Malaysia' },
-  { code: '+62', country: 'Indonesia' },
-];
 
 const generalApplicationSchema = z.object({
   name: z.string().min(2, 'Name must be at least 2 characters'),
@@ -83,10 +60,19 @@ export default function CareersPage() {
     register,
     handleSubmit,
     reset,
+    setValue,
+    watch,
     formState: { errors },
   } = useForm<GeneralApplicationFormData>({
     resolver: zodResolver(generalApplicationSchema),
+    defaultValues: {
+      countryCode: '+965',
+      phone: '',
+    },
   });
+
+  const formCountryCode = watch('countryCode');
+  const formPhone = watch('phone');
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
@@ -116,7 +102,7 @@ export default function CareersPage() {
       const formData = new FormData();
       formData.append('name', data.name);
       formData.append('email', data.email);
-      formData.append('phone', `${data.countryCode} ${data.phone}`);
+      formData.append('phone', `${data.countryCode}${data.phone}`);
       formData.append('address', data.address || '');
       formData.append('message', data.message || '');
       formData.append('jobId', 'GENERAL');
@@ -449,29 +435,14 @@ export default function CareersPage() {
                   <label className="block text-sm font-medium mb-2">
                     Phone Number <span className="text-cyber-pink">*</span>
                   </label>
-                  <div className="flex gap-2">
-                    {/* Country Code */}
-                    <select
-                      {...register('countryCode')}
-                      className="w-32 px-3 py-3 rounded-lg glass border border-white/10 focus:border-cyber-blue focus:outline-none transition-colors text-white"
-                      style={{ background: 'rgba(0, 0, 0, 0.3)' }}
-                    >
-                      <option value="">Code</option>
-                      {countryCodes.map((country) => (
-                        <option key={country.code} value={country.code}>
-                          {country.code} {country.country}
-                        </option>
-                      ))}
-                    </select>
-                    {/* Phone Number */}
-                    <input
-                      {...register('phone')}
-                      type="tel"
-                      id="gen-phone"
-                      className="flex-1 px-4 py-3 rounded-lg glass border border-white/10 focus:border-cyber-blue focus:outline-none transition-colors"
-                      placeholder="123456789"
-                    />
-                  </div>
+                  <PhoneNumberInput
+                    countryCodeValue={formCountryCode}
+                    phoneValue={formPhone}
+                    onCountryCodeChange={(value) => setValue('countryCode', value)}
+                    onPhoneChange={(value) => setValue('phone', value)}
+                    placeholder="123456789"
+                    required
+                  />
                   {(errors.countryCode || errors.phone) && (
                     <p className="text-red-400 text-sm mt-1">
                       {errors.countryCode?.message || errors.phone?.message}
