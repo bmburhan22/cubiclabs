@@ -61,13 +61,13 @@ const PhoneNumberInput = forwardRef<HTMLInputElement, PhoneNumberInputProps>(
     const isSmallForm = className.includes('text-sm');
     
     return (
-      <div className={`flex ${isSmallForm ? 'gap-1' : 'gap-2'} PhoneNumberInput ${className}`}>
+      <div className={`flex ${isSmallForm ? 'gap-1' : 'gap-2'} PhoneNumberInput ${className}`} dir="ltr">
         {/* Country Code */}
         <select
           value={countryCodeValue}
           onChange={(e) => onCountryCodeChange(e.target.value)}
           className={`${isSmallForm ? 'w-40 px-2 py-2 text-sm' : 'w-52 px-3 py-3'} rounded-lg glass border border-white/10 focus:border-cyber-blue focus:outline-none transition-colors text-white`}
-          style={{ background: 'rgba(0, 0, 0, 0.3)' }}
+          style={{ background: 'rgba(0, 0, 0, 0.3)', direction: 'ltr', textAlign: 'left' }}
           required={required}
         >
           {countryCodes.map((country) => (
@@ -84,7 +84,7 @@ const PhoneNumberInput = forwardRef<HTMLInputElement, PhoneNumberInputProps>(
           value={phoneValue}
           onChange={(e) => onPhoneChange(e.target.value)}
           className={`flex-1 ${isSmallForm ? 'px-3 py-2 text-sm' : 'px-4 py-3'} rounded-lg glass border border-white/10 focus:border-cyber-blue focus:outline-none transition-colors text-white`}
-          style={{ background: 'rgba(0, 0, 0, 0.3)' }}
+          style={{ background: 'rgba(0, 0, 0, 0.3)', direction: 'ltr', textAlign: 'left' }}
           placeholder={placeholder}
           required={required}
         />

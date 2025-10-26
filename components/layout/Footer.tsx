@@ -72,20 +72,20 @@ export default function Footer() {
                 <MapPin size={16} className="mt-1 flex-shrink-0 text-cyber-blue" />
                 <span>{t('address')}</span>
               </li>
-              <li className="flex items-center space-x-2 text-gray-400 text-sm">
-                <Phone size={16} className="flex-shrink-0 text-cyber-blue" />
-                <span>{t('phone')}</span>
+              <li className="flex items-start space-x-2 text-gray-400 text-sm">
+                <Phone size={16} className="mt-1 flex-shrink-0 text-cyber-blue" />
+                <span dir="ltr" className="inline-block">+965 41147331</span>
               </li>
-              <li className="flex items-center space-x-2 text-gray-400 text-sm">
-                <Mail size={16} className="flex-shrink-0 text-cyber-blue" />
-                <span>{t('email')}</span>
+              <li className="flex items-start space-x-2 text-gray-400 text-sm">
+                <Mail size={16} className="mt-1 flex-shrink-0 text-cyber-blue" />
+                <span dir="ltr" className="inline-block">info@cubiclabs.net</span>
               </li>
             </ul>
           </div>
 
           {/* Social Links */}
-          <div>
-            <h3 className="text-white font-semibold mb-4">Follow Us</h3>
+          <div dir="ltr">
+            <h3 className="text-white font-semibold mb-4">{t('followUs')}</h3>
             <div className="flex space-x-3">
               {socialLinks.map((social) => (
                 <motion.a
@@ -97,7 +97,7 @@ export default function Footer() {
                   whileTap={{ scale: 0.95 }}
                   className="w-10 h-10 rounded-lg glass flex items-center justify-center hover:bg-gradient-to-br hover:from-cyber-blue/20 hover:to-cyber-pink/20 transition-all group"
                 >
-                  <social.icon size={20} className="text-gray-400 group-hover:text-white transition-colors" />
+                  <social.icon size={20} className="text-gray-400 group-hover:text-white transition-colors flex-shrink-0" />
                 </motion.a>
               ))}
             </div>

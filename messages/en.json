@@ -162,6 +162,30 @@
     "choosePlan": "Get Started Now",
     "customize": "",
     "popularPlan": "Most Popular",
+    "faqTitle": "Frequently Asked",
+    "faqTitleHighlight": "Questions",
+    "faq": {
+      "changePlan": {
+        "question": "Can I change plans later?",
+        "answer": "Yes! You can upgrade or downgrade your plan at any time. Changes will be reflected in your next billing cycle."
+      },
+      "paymentMethods": {
+        "question": "What payment methods do you accept?",
+        "answer": "We accept all major credit cards, PayPal, and bank transfers for enterprise plans."
+      },
+      "freeTrial": {
+        "question": "Is there a free trial?",
+        "answer": "Yes, all plans come with a 14-day free trial. No credit card required."
+      },
+      "cancel": {
+        "question": "Can I cancel anytime?",
+        "answer": "Absolutely! You can cancel your subscription at any time with no penalties or fees."
+      }
+    },
+    "ctaTitle": "Still Have",
+    "ctaTitleHighlight": "Questions",
+    "ctaDescription": "Our team is here to help you find the perfect solution.",
+    "ctaButton": "Contact Us",
     "basic": {
       "name": "E-commerce Starts",
       "badge": "Basic Plan",
@@ -237,12 +261,18 @@
     }
   },
   "careers": {
-    "title": "Join Our Team",
-    "subtitle": "Build the future with us",
-    "description": "We're always looking for talented individuals to join our innovative team.",
+    "title": "Careers",
+    "subtitle": "Join Our Team",
+    "description": "Build the future with us. We're always looking for talented individuals who are passionate about technology and innovation.",
     "openPositions": "Open Positions",
-    "noPositions": "No open positions at the moment",
-    "checkBack": "Check back soon for new opportunities",
+    "available": "available",
+    "noPositions": "No positions found matching your criteria.",
+    "checkBack": "Try adjusting your search or filter.",
+    "generalApplication": "General Application",
+    "generalApplicationDesc": "Don't see a specific role? Apply here and we'll consider you for future opportunities.",
+    "applicationType": "Application Type",
+    "generalFutureOpportunities": "General / Future Opportunities",
+    "cancel": "Cancel",
     "cantFind": "Can't find the right role?",
     "cantFindDesc": "We're always interested in meeting talented people. Send us your resume and we'll keep you in mind for future opportunities.",
     "getInTouch": "Get In Touch",
@@ -250,7 +280,7 @@
     "location": "Location",
     "type": "Type",
     "department": "Department",
-    "posted": "Posted",
+    "posted": "Experience",
     "responsibilities": "Responsibilities",
     "requirements": "Requirements",
     "benefits": "What We Offer",
@@ -282,6 +312,7 @@
     "title": "Get In Touch",
     "subtitle": "We'd love to hear from you",
     "description": "Have a question or want to work together? Drop us a message!",
+    "sendMessage": "Send us a message",
     "name": "Name",
     "namePlaceholder": "Your name",
     "email": "Email",
@@ -298,7 +329,18 @@
     "successTitle": "Message Sent!",
     "successMessage": "We'll get back to you soon.",
     "errorTitle": "Error",
-    "errorMessage": "Failed to send message. Please try again."
+    "errorMessage": "Failed to send message. Please try again.",
+    "contactInfo": "Contact Information",
+    "reachOut": "Reach out to us through any of the following channels. We're here to help!",
+    "address": "Address",
+    "phoneLabel": "Phone",
+    "emailLabel": "Email",
+    "businessHours": "Business Hours",
+    "saturdayThursday": "Saturday - Thursday: 9:00 AM - 6:00 PM",
+    "friday": "Friday: Closed",
+    "preferChat": "Prefer to chat in real-time?",
+    "whatsappButton": "Click the WhatsApp button in the bottom right corner to start a conversation with our team!",
+    "onlineReady": "We're online and ready to help"
   },
   "application": {
     "title": "Apply for Position",
@@ -338,6 +380,7 @@
     "terms": "Terms of Service",
     "cookies": "Cookie Policy",
     "connect": "Connect",
+    "followUs": "Follow Us",
     "address": "Kuwait City, Qibla, Salhiya Street, Luhaib (3), Office No: 213",
     "phone": "+965 41147331",
     "email": "info@cubiclabs.net",

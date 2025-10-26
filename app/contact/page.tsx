@@ -35,20 +35,20 @@ const contactSchema = z.object({
 
 type ContactFormData = z.infer<typeof contactSchema>;
 
-const contactInfo = [
+const contactInfo = (t: any) => [
   {
     icon: MapPin,
-    title: 'Address',
+    title: t('address'),
     content: 'Kuwait City, Qibla, Salhiya Street, Luhaib (3), Office No: 213',
   },
   {
     icon: Phone,
-    title: 'Phone',
+    title: t('phoneLabel'),
     content: '+965 41147331',
   },
   {
     icon: Mail,
-    title: 'Email',
+    title: t('emailLabel'),
     content: 'info@cubiclabs.net',
   },
 ];
@@ -141,7 +141,7 @@ export default function ContactPage() {
               transition={{ duration: 0.8, delay: 0.2 }}
               className="glass p-8 rounded-2xl"
             >
-              <h2 className="text-2xl font-bold mb-6">Send us a message</h2>
+              <h2 className="text-2xl font-bold mb-6">{t('sendMessage')}</h2>
 
               <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
                 {/* Name */}
@@ -171,7 +171,8 @@ export default function ContactPage() {
                     type="email"
                     id="email"
                     className="w-full px-4 py-3 rounded-lg glass-dark border border-white/10 focus:border-cyber-blue focus:outline-none transition-colors"
-                    placeholder={t('emailPlaceholder')}
+                    placeholder="your@email.com"
+                    dir="ltr"
                   />
                   {errors.email && (
                     <p className="text-red-400 text-sm mt-1">{errors.email.message}</p>
@@ -179,7 +180,7 @@ export default function ContactPage() {
                 </div>
 
                 {/* Phone (Optional) */}
-                <div>
+                <div dir="ltr">
                   <label className="block text-sm font-medium mb-2">
                     {t('phoneOptional')}
                   </label>
@@ -260,15 +261,14 @@ export default function ContactPage() {
               className="space-y-8"
             >
               <div>
-                <h2 className="text-2xl font-bold mb-6">Contact Information</h2>
+                <h2 className="text-2xl font-bold mb-6">{t('contactInfo')}</h2>
                 <p className="text-gray-400 mb-8">
-                  Reach out to us through any of the following channels. We&apos;re
-                  here to help!
+                  {t('reachOut')}
                 </p>
               </div>
 
               <div className="space-y-6">
-                {contactInfo.map((info, index) => (
+                {contactInfo(t).map((info, index) => (
                   <motion.div
                     key={info.title}
                     initial={{ opacity: 0, y: 20 }}
@@ -282,7 +282,9 @@ export default function ContactPage() {
                       </div>
                       <div>
                         <h3 className="font-semibold mb-1">{info.title}</h3>
-                        <p className="text-gray-400">{info.content}</p>
+                        <p className="text-gray-400" dir={info.title === t('phoneLabel') || info.title === t('emailLabel') ? 'ltr' : undefined}>
+                          {info.content}
+                        </p>
                       </div>
                     </div>
                   </motion.div>
@@ -296,10 +298,10 @@ export default function ContactPage() {
                 transition={{ duration: 0.5, delay: 0.9 }}
                 className="glass-dark p-6 rounded-xl cyber-border"
               >
-                <h3 className="text-xl font-semibold mb-3">Business Hours</h3>
+                <h3 className="text-xl font-semibold mb-3">{t('businessHours')}</h3>
                 <div className="space-y-2 text-gray-400">
-                  <p>Saturday - Thursday: 9:00 AM - 6:00 PM</p>
-                  <p>Friday: Closed</p>
+                  <p dir="ltr">{t('saturdayThursday')}</p>
+                  <p>{t('friday')}</p>
                 </div>
               </motion.div>
             </motion.div>
@@ -318,15 +320,14 @@ export default function ContactPage() {
             className="glass-dark p-12 rounded-2xl"
           >
             <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              Prefer to chat in real-time?
+              {t('preferChat')}
             </h2>
             <p className="text-gray-300 mb-6">
-              Click the WhatsApp button in the bottom right corner to start a
-              conversation with our team!
+              {t('whatsappButton')}
             </p>
             <div className="inline-flex items-center gap-2 text-cyber-blue">
               <div className="w-3 h-3 bg-cyber-blue rounded-full animate-pulse"></div>
-              <span className="font-semibold">We&apos;re online and ready to help</span>
+              <span className="font-semibold">{t('onlineReady')}</span>
             </div>
           </motion.div>
         </div>

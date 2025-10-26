@@ -3,35 +3,34 @@
 import { motion } from 'framer-motion';
 import { Code, ShoppingCart, Zap, Wrench } from 'lucide-react';
 import Link from 'next/link';
-
-const services = [
-  {
-    icon: Code,
-    title: 'Custom Websites',
-    description:
-      'We build websites from the ground up, designed to match your brand identity and business goals. Our team ensures every element — from layouts to typography — reflects your unique vision. Whether you need a corporate website, a startup landing page, or a complex web application, we deliver scalable and future-proof solutions using modern frameworks and clean code.',
-  },
-  {
-    icon: ShoppingCart,
-    title: 'E-Commerce Solutions',
-    description:
-      'We create fully functional, secure, and easy-to-manage e-commerce platforms that help you grow your business online. Our solutions include product catalog integration, secure payment gateways, inventory management, and a smooth checkout experience. Whether it\'s Shopify or a custom-built platform, we ensure your store is built for conversions and customer satisfaction.',
-  },
-  {
-    icon: Zap,
-    title: 'Website Performance Optimization',
-    description:
-      'Accelerate your operations with our cutting-edge performance enhancement solutions. We analyze your website\'s speed, identify bottlenecks, and implement optimizations to improve load times, user experience, and search engine rankings. From code minification to caching strategies, we ensure your site runs at peak performance.',
-  },
-  {
-    icon: Wrench,
-    title: 'Maintenance & Support',
-    description:
-      'Launching a website is just the beginning. We offer ongoing maintenance and support to keep your site secure, updated, and running smoothly. Our team handles software updates, security patches, performance monitoring, and technical support, so you can focus on growing your business while we take care of the technical details.',
-  },
-];
+import { useTranslations } from '@/lib/LanguageContext';
 
 export default function ServicesPage() {
+  const t = useTranslations('services');
+  
+  const services = [
+    {
+      icon: Code,
+      title: t('items.websites.title'),
+      description: t('items.websites.description'),
+    },
+    {
+      icon: ShoppingCart,
+      title: t('items.ecommerce.title'),
+      description: t('items.ecommerce.description'),
+    },
+    {
+      icon: Zap,
+      title: t('items.optimization.title'),
+      description: t('items.optimization.description'),
+    },
+    {
+      icon: Wrench,
+      title: t('items.maintenance.title'),
+      description: t('items.maintenance.description'),
+    },
+  ];
+
   return (
     <div className="relative min-h-screen pt-20">
       {/* Background */}
@@ -47,13 +46,13 @@ export default function ServicesPage() {
             className="text-center max-w-4xl mx-auto mb-16"
           >
             <div className="inline-block px-4 py-2 rounded-full glass mb-6">
-              <span className="text-cyber-blue font-semibold">Our Services</span>
+              <span className="text-cyber-blue font-semibold">{t('badge')}</span>
             </div>
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6">
-              What We <span className="text-gradient">Offer</span>
+              {t('title')} <span className="text-gradient">{t('titleHighlight')}</span>
             </h1>
             <p className="text-xl md:text-2xl text-gray-300">
-              Comprehensive web solutions tailored to your business needs
+              {t('subtitle')}
             </p>
           </motion.div>
 
@@ -94,10 +93,10 @@ export default function ServicesPage() {
             className="glass-dark p-12 rounded-2xl cyber-border"
           >
             <h2 className="text-4xl md:text-5xl font-bold mb-6">
-              Ready to Get <span className="text-gradient">Started</span>?
+              {t('cta.title')} <span className="text-gradient">{t('cta.titleHighlight')}</span> {t('cta.subtitle')}
             </h2>
             <p className="text-gray-300 text-lg mb-8">
-              Let&apos;s discuss how we can help bring your vision to life
+              {t('cta.description')}
             </p>
             <Link href="/contact">
               <motion.button
@@ -105,7 +104,7 @@ export default function ServicesPage() {
                 whileTap={{ scale: 0.95 }}
                 className="relative z-10 px-8 py-4 bg-gradient-to-r from-cyber-blue to-cyber-pink rounded-lg font-semibold text-lg"
               >
-                Contact Us
+                {t('cta.button')}
               </motion.button>
             </Link>
           </motion.div>

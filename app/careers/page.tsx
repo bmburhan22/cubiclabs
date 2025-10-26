@@ -163,14 +163,13 @@ export default function CareersPage() {
             className="text-center max-w-4xl mx-auto mb-16"
           >
             <div className="inline-block px-4 py-2 rounded-full glass mb-6">
-              <span className="text-cyber-blue font-semibold">Careers</span>
+              <span className="text-cyber-blue font-semibold">{t('title')}</span>
             </div>
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6">
-              Join Our <span className="text-gradient">Team</span>
+              {t('subtitle')}
             </h1>
             <p className="text-xl text-gray-300">
-              Build the future with us. We&apos;re always looking for talented
-              individuals who are passionate about technology and innovation.
+              {t('description')}
             </p>
           </motion.div>
 
@@ -217,7 +216,7 @@ export default function CareersPage() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="mb-8">
             <h2 className="text-3xl md:text-4xl font-bold mb-6">
-              Open <span className="text-gradient">Positions</span>
+              {t('openPositions')}
             </h2>
 
             {/* Search and Filter */}
@@ -234,6 +233,7 @@ export default function CareersPage() {
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                   className="w-full pl-12 pr-4 py-3 rounded-lg glass-dark border border-white/10 focus:border-cyber-blue focus:outline-none transition-colors"
+                  dir="auto"
                 />
               </div>
 
@@ -257,8 +257,7 @@ export default function CareersPage() {
 
             {/* Results count */}
             <p className="text-gray-400">
-              {filteredJobs.length} position{filteredJobs.length !== 1 ? 's' : ''}{' '}
-              available
+              {filteredJobs.length === 0 ? t('noPositions') : `${filteredJobs.length} ${filteredJobs.length === 1 ? t('openPositions').toLowerCase() : t('openPositions')} ${t('available')}`}
             </p>
           </div>
 
@@ -295,7 +294,7 @@ export default function CareersPage() {
                       </h3>
                       <p className="text-gray-400 mb-3">{job.description}</p>
                       <p className="text-sm text-gray-500">
-                        Experience: {job.experience}
+                        {t('posted')}: {job.experience}
                       </p>
                     </div>
 
@@ -305,7 +304,7 @@ export default function CareersPage() {
                         whileTap={{ scale: 0.95 }}
                         className="px-6 py-3 bg-gradient-to-r from-cyber-blue to-cyber-pink rounded-lg font-semibold flex items-center gap-2 whitespace-nowrap"
                       >
-                        Apply Now
+                        {t('applyNow')}
                         <ChevronRight size={18} />
                       </motion.button>
                     </Link>
@@ -315,10 +314,10 @@ export default function CareersPage() {
             ) : (
               <div className="text-center py-12">
                 <p className="text-gray-400 text-lg">
-                  No positions found matching your criteria.
+                  {t('noPositions')}
                 </p>
                 <p className="text-gray-500 mt-2">
-                  Try adjusting your search or filter.
+                  {t('checkBack')}
                 </p>
               </div>
             )}
@@ -337,11 +336,10 @@ export default function CareersPage() {
             className="glass-dark p-12 rounded-2xl cyber-border"
           >
             <h2 className="text-4xl md:text-5xl font-bold mb-6">
-              Don&apos;t See the Right Role?
+              {t('cantFind')}
             </h2>
             <p className="text-gray-300 text-lg mb-8">
-              We&apos;re always looking for talented people. Send us your resume and
-              we&apos;ll keep you in mind for future opportunities.
+              {t('cantFindDesc')}
             </p>
             <motion.button
               onClick={() => setShowGeneralForm(true)}
@@ -349,7 +347,7 @@ export default function CareersPage() {
               whileTap={{ scale: 0.95 }}
               className="px-8 py-4 bg-gradient-to-r from-cyber-blue to-cyber-pink rounded-lg font-semibold text-lg"
             >
-              Get In Touch
+              {t('getInTouch')}
             </motion.button>
           </motion.div>
         </div>
@@ -376,9 +374,9 @@ export default function CareersPage() {
                 {/* Header */}
                 <div className="flex justify-between items-center mb-6">
                   <div>
-                    <h2 className="text-3xl font-bold mb-2">General Application</h2>
+                    <h2 className="text-3xl font-bold mb-2">{t('generalApplication')}</h2>
                     <p className="text-gray-400">
-                      Don&apos;t see a specific role? Apply here and we&apos;ll consider you for future opportunities.
+                      {t('generalApplicationDesc')}
                     </p>
                   </div>
                   <button
@@ -394,7 +392,7 @@ export default function CareersPage() {
                 {/* Auto-filled Job Info */}
                 <div className="bg-gradient-to-r from-purple-500/10 to-pink-500/10 p-4 rounded-lg border border-purple-500/30">
                   <p className="text-sm font-semibold text-purple-300">
-                    Application Type: <span className="text-white">General / Future Opportunities</span>
+                    {t('applicationType')}: <span className="text-white">{t('generalFutureOpportunities')}</span>
                   </p>
                 </div>
 
@@ -426,6 +424,7 @@ export default function CareersPage() {
                     id="gen-email"
                     className="w-full px-4 py-3 rounded-lg glass border border-white/10 focus:border-cyber-blue focus:outline-none transition-colors"
                     placeholder="john@example.com"
+                    dir="ltr"
                   />
                   {errors.email && (
                     <p className="text-red-400 text-sm mt-1">{errors.email.message}</p>
@@ -433,7 +432,7 @@ export default function CareersPage() {
                 </div>
 
                 {/* Phone */}
-                <div>
+                <div dir="ltr">
                   <label className="block text-sm font-medium mb-2">
                     Phone Number <span className="text-cyber-pink">*</span>
                   </label>
@@ -513,7 +512,7 @@ export default function CareersPage() {
                     whileTap={{ scale: 0.98 }}
                     className="flex-1 py-3 glass rounded-lg font-semibold hover:bg-white/10 transition-all"
                   >
-                    Cancel
+                    {t('cancel')}
                   </motion.button>
                   <motion.button
                     type="submit"
@@ -525,11 +524,11 @@ export default function CareersPage() {
                     {isSubmitting ? (
                       <>
                         <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
-                        Submitting...
+                        {t('submitting')}
                       </>
                     ) : (
                       <>
-                        Submit Application
+                        {t('submitApplication')}
                         <Send size={18} />
                       </>
                     )}

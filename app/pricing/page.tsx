@@ -87,6 +87,25 @@ export default function PricingPage() {
     },
   ];
 
+  const faqs = [
+    {
+      q: t('faq.changePlan.question'),
+      a: t('faq.changePlan.answer'),
+    },
+    {
+      q: t('faq.paymentMethods.question'),
+      a: t('faq.paymentMethods.answer'),
+    },
+    {
+      q: t('faq.freeTrial.question'),
+      a: t('faq.freeTrial.answer'),
+    },
+    {
+      q: t('faq.cancel.question'),
+      a: t('faq.cancel.answer'),
+    },
+  ];
+
   return (
     <div className="relative min-h-screen pt-20">
       {/* Background */}
@@ -102,7 +121,7 @@ export default function PricingPage() {
             className="text-center max-w-4xl mx-auto mb-16"
           >
             <div className="inline-block px-4 py-2 rounded-full glass mb-6">
-              <span className="text-cyber-blue font-semibold">Pricing Plans</span>
+              <span className="text-cyber-blue font-semibold">{t('title')}</span>
             </div>
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6">
               {t('title')}
@@ -200,29 +219,12 @@ export default function PricingPage() {
             className="text-center mb-12"
           >
             <h2 className="text-4xl md:text-5xl font-bold mb-4">
-              Frequently Asked <span className="text-gradient">Questions</span>
+              {t('faqTitle')} <span className="text-gradient">{t('faqTitleHighlight')}</span>
             </h2>
           </motion.div>
 
           <div className="space-y-4">
-            {[
-              {
-                q: 'Can I change plans later?',
-                a: 'Yes! You can upgrade or downgrade your plan at any time. Changes will be reflected in your next billing cycle.',
-              },
-              {
-                q: 'What payment methods do you accept?',
-                a: 'We accept all major credit cards, PayPal, and bank transfers for enterprise plans.',
-              },
-              {
-                q: 'Is there a free trial?',
-                a: 'Yes, all plans come with a 14-day free trial. No credit card required.',
-              },
-              {
-                q: 'Can I cancel anytime?',
-                a: 'Absolutely! You can cancel your subscription at any time with no penalties or fees.',
-              },
-            ].map((faq, index) => (
+            {faqs.map((faq, index) => (
               <motion.div
                 key={faq.q}
                 initial={{ opacity: 0, y: 20 }}
@@ -250,10 +252,10 @@ export default function PricingPage() {
             className="glass-dark p-12 rounded-2xl cyber-border"
           >
             <h2 className="text-4xl md:text-5xl font-bold mb-6">
-              Still Have <span className="text-gradient">Questions</span>?
+              {t('ctaTitle')} <span className="text-gradient">{t('ctaTitleHighlight')}</span>?
             </h2>
             <p className="text-gray-300 text-lg mb-8">
-              Our team is here to help you find the perfect solution.
+              {t('ctaDescription')}
             </p>
             <Link href="/contact">
               <motion.button
@@ -261,7 +263,7 @@ export default function PricingPage() {
                 whileTap={{ scale: 0.95 }}
                 className="relative z-10 px-8 py-4 bg-gradient-to-r from-cyber-blue to-cyber-pink rounded-lg font-semibold text-lg"
               >
-                Contact Us
+                {t('ctaButton')}
               </motion.button>
             </Link>
           </motion.div>

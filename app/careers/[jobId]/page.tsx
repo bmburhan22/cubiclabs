@@ -351,6 +351,7 @@ export default function JobApplicationPage({
                     id="email"
                     className="w-full px-4 py-2 rounded-lg glass-dark border border-white/10 focus:border-cyber-blue focus:outline-none transition-colors text-sm"
                     placeholder="john@example.com"
+                    dir="ltr"
                   />
                   {errors.email && (
                     <p className="text-red-400 text-xs mt-1">
@@ -360,7 +361,7 @@ export default function JobApplicationPage({
                 </div>
 
                 {/* Phone */}
-                <div>
+                <div dir="ltr">
                   <label className="block text-sm font-medium mb-2">
                     {t('phone')} <span className="text-cyber-pink">*</span>
                   </label>

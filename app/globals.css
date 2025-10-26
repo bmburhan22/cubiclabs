@@ -149,6 +149,32 @@ body {
   direction: ltr;
 }
 
+/* Prevent reversing of numbers, emails, phone numbers in RTL */
+[dir="rtl"] input[type="email"],
+[dir="rtl"] input[type="tel"],
+[dir="rtl"] input[type="number"],
+[dir="rtl"] input[type="url"],
+[dir="rtl"] .PhoneNumberInput input,
+[dir="rtl"] .PhoneNumberInput select {
+  direction: ltr;
+  text-align: left;
+}
+
+/* Email addresses should remain LTR */
+[dir="rtl"] a[href^="mailto:"] {
+  direction: ltr;
+  display: inline-block;
+  unicode-bidi: bidi-override;
+}
+
+/* Phone numbers should remain LTR */
+[dir="rtl"] span[class*="phone"],
+[dir="rtl"] .phone-number {
+  direction: ltr;
+  display: inline-block;
+  unicode-bidi: bidi-override;
+}
+
 /* Font switching based on language */
 html[lang="ar"] body {
   font-family: var(--font-cairo), sans-serif;

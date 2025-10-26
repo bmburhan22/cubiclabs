@@ -3,39 +3,49 @@
 import { motion } from 'framer-motion';
 import { Target, Eye, Users, Award, Rocket, Heart } from 'lucide-react';
 import Image from 'next/image';
+import { useTranslations } from '@/lib/LanguageContext';
 
-const values = [
-  {
-    icon: Target,
-    title: 'Mission-Driven',
-    description: 'We are committed to delivering innovative solutions that transform businesses and empower people.',
-  },
-  {
-    icon: Eye,
-    title: 'Visionary',
-    description: 'We see beyond the present, constantly innovating to shape the future of technology.',
-  },
-  {
-    icon: Users,
-    title: 'Collaborative',
-    description: 'We believe in the power of teamwork and building strong partnerships with our clients.',
-  },
-  {
-    icon: Award,
-    title: 'Excellence',
-    description: 'We strive for excellence in everything we do, never settling for anything less than the best.',
-  },
-];
-
-const timeline = [
-  {
-    year: 'May 2025',
-    title: 'The Beginning',
-    description: 'Born from a vision to revolutionize digital experiences, Cubiclabs was founded by a passionate team of 6 innovators committed to delivering cutting-edge, scalable web solutions that push the boundaries of what\'s possible.'
-  },
-];
 
 export default function AboutPage() {
+  const t = useTranslations('about');
+  
+  const values = [
+    {
+      icon: Target,
+      title: t('values.items.mission.title'),
+      description: t('values.items.mission.description'),
+    },
+    {
+      icon: Eye,
+      title: t('values.items.visionary.title'),
+      description: t('values.items.visionary.description'),
+    },
+    {
+      icon: Users,
+      title: t('values.items.collaborative.title'),
+      description: t('values.items.collaborative.description'),
+    },
+    {
+      icon: Award,
+      title: t('values.items.excellence.title'),
+      description: t('values.items.excellence.description'),
+    },
+  ];
+
+  const timeline = [
+    {
+      year: t('timeline.beginning.year'),
+      title: t('timeline.beginning.title'),
+      description: t('timeline.beginning.description'),
+    },
+  ];
+
+  const stats = [
+    { number: '3+', label: t('stats.partners') },
+    { number: '5+', label: t('stats.innovators') },
+    { number: '3+', label: t('stats.solutions') },
+  ];
+
   return (
     <div className="relative min-h-screen pt-20">
       {/* Hero Section */}
@@ -50,15 +60,13 @@ export default function AboutPage() {
             className="text-center max-w-4xl mx-auto"
           >
             <div className="inline-block px-4 py-2 rounded-full glass mb-6">
-              <span className="text-cyber-blue font-semibold">About Us</span>
+              <span className="text-cyber-blue font-semibold">{t('badge')}</span>
             </div>
             <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold mb-6">
-              We Are <span className="text-gradient">Cubiclabs</span>
+              {t('title')} <span className="text-gradient">{t('titleHighlight')}</span>
             </h1>
             <p className="text-xl md:text-2xl text-gray-300 leading-relaxed">
-              A team of passionate innovators dedicated to building the future of
-              technology. We transform ideas into reality with cutting-edge
-              solutions that make a difference.
+              {t('subtitle')}
             </p>
           </motion.div>
         </div>
@@ -78,11 +86,9 @@ export default function AboutPage() {
               <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-cyber-blue to-purple-600 flex items-center justify-center mb-6">
                 <Rocket size={32} />
               </div>
-              <h2 className="text-3xl font-bold mb-4">Our Mission</h2>
+              <h2 className="text-3xl font-bold mb-4">{t('mission.title')}</h2>
               <p className="text-gray-300 leading-relaxed">
-                To empower businesses worldwide with innovative technology
-                solutions that drive growth, efficiency, and success. We believe
-                in making advanced technology accessible to everyone.
+                {t('mission.description')}
               </p>
             </motion.div>
 
@@ -96,11 +102,9 @@ export default function AboutPage() {
               <div className="w-16 h-16 rounded-xl bg-gradient-to-br from-cyber-pink to-purple-600 flex items-center justify-center mb-6">
                 <Heart size={32} />
               </div>
-              <h2 className="text-3xl font-bold mb-4">Our Vision</h2>
+              <h2 className="text-3xl font-bold mb-4">{t('vision.title')}</h2>
               <p className="text-gray-300 leading-relaxed">
-                To be the global leader in technological innovation, creating
-                solutions that shape the future and improve lives. We envision a
-                world where technology seamlessly enhances human potential.
+                {t('vision.description')}
               </p>
             </motion.div>
           </div>
@@ -118,10 +122,10 @@ export default function AboutPage() {
             className="text-center mb-16"
           >
             <h2 className="text-4xl md:text-5xl font-bold mb-4">
-              Our Core <span className="text-gradient">Values</span>
+              {t('values.title')} <span className="text-gradient">{t('values.titleHighlight')}</span>
             </h2>
             <p className="text-gray-400 text-lg max-w-2xl mx-auto">
-              The principles that guide everything we do
+              {t('values.subtitle')}
             </p>
           </motion.div>
 
@@ -158,10 +162,10 @@ export default function AboutPage() {
             className="text-center mb-16"
           >
             <h2 className="text-4xl md:text-5xl font-bold mb-4">
-              Our <span className="text-gradient">Journey</span>
+              {t('timeline.title')} <span className="text-gradient">{t('timeline.titleHighlight')}</span>
             </h2>
             <p className="text-gray-400 text-lg max-w-2xl mx-auto">
-              From a small startup to a global innovator
+              {t('timeline.subtitle')}
             </p>
           </motion.div>
 
@@ -204,11 +208,7 @@ export default function AboutPage() {
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
-            {[
-              { number: '3+', label: 'Trusted Partners' },
-              { number: '5+', label: 'Dedicated Innovators' },
-              { number: '3+', label: 'Solutions Delivered' },
-            ].map((stat, index) => (
+            {stats.map((stat, index) => (
               <motion.div
                 key={stat.label}
                 initial={{ opacity: 0, scale: 0.8 }}
@@ -238,10 +238,10 @@ export default function AboutPage() {
             className="text-center mb-16"
           >
             <h2 className="text-4xl md:text-5xl font-bold mb-4">
-              Our <span className="text-gradient">Partners</span>
+              {t('ourPartners.title')} <span className="text-gradient">{t('ourPartners.titleHighlight')}</span>
             </h2>
             <p className="text-gray-400 text-lg max-w-2xl mx-auto">
-              Collaborating with industry leaders to deliver exceptional results
+              {t('ourPartners.subtitle')}
             </p>
           </motion.div>
 
@@ -302,10 +302,10 @@ export default function AboutPage() {
             className="text-center mb-16"
           >
             <h2 className="text-4xl md:text-5xl font-bold mb-4">
-              Trusted <span className="text-gradient">Clients</span>
+              {t('clients.title')} <span className="text-gradient">{t('clients.titleHighlight')}</span>
             </h2>
             <p className="text-gray-400 text-lg max-w-2xl mx-auto">
-              Proud to work with innovative companies worldwide
+              {t('clients.subtitle')}
             </p>
           </motion.div>
 
