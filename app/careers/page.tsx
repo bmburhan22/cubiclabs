@@ -453,7 +453,8 @@ export default function CareersPage() {
                     {/* Country Code */}
                     <select
                       {...register('countryCode')}
-                      className="w-32 px-3 py-3 rounded-lg glass border border-white/10 focus:border-cyber-blue focus:outline-none transition-colors"
+                      className="w-32 px-3 py-3 rounded-lg glass border border-white/10 focus:border-cyber-blue focus:outline-none transition-colors text-white"
+                      style={{ background: 'rgba(0, 0, 0, 0.3)' }}
                     >
                       <option value="">Code</option>
                       {countryCodes.map((country) => (

@@ -59,6 +59,7 @@ body {
     background: linear-gradient(135deg, #5E5CE6 0%, #AF52DE 25%, #FF2D55 50%, #FF375F 75%, #FF6482 100%);
     -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
     -webkit-mask-composite: xor;
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
     mask-composite: exclude;
     pointer-events: none;
     z-index: -1;
@@ -219,4 +220,48 @@ html[lang="en"] body {
 
 .international-phone-input .react-international-phone-country-selector-dropdown__list-item--focused {
   background: rgba(0, 240, 255, 0.15) !important;
+}
+
+/* Fix flag emoji size in country selector */
+.international-phone-input .react-international-phone-country-selector-button {
+  height: 42px !important;
+}
+
+.international-phone-input .react-international-phone-country-selector-button__button-content {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.875rem;
+}
+
+.international-phone-input .react-international-phone-country-selector-button__flag-emoji {
+  font-size: 1rem !important;
+  margin: 0 2px !important;
+  width: 16px !important;
+  height: 16px !important;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.international-phone-input .react-international-phone-flag-emoji {
+  width: 16px !important;
+  height: 16px !important;
+}
+
+.international-phone-input .react-international-phone-country-selector-dropdown__list-item-flag-emoji {
+  width: 16px !important;
+  height: 16px !important;
+  margin-right: 8px;
+}
+
+/* Fix select dropdown options to have proper colors */
+select.glass option,
+select option {
+  background: rgba(10, 10, 20, 0.95) !important;
+  color: white !important;
+}
+
+select.glass {
+  color: white !important;
 }
