@@ -306,7 +306,7 @@
       "frontEndDesc": "Craft responsive, accessible, and high-performing web and mobile interfaces with modern frameworks.",
       "backEndDesc": "Build and maintain secure, scalable server-side applications for web and mobile platforms.",
       "fullStackDesc": "Develop end-to-end features across both front-end and back-end to create seamless digital experiences.",
-      "job001": {
+      "job-001": {
         "title": "Front End Developer",
         "description": "We're looking for a Front End Developer to craft responsive, accessible, and high-performing web and mobile interfaces. You'll work closely with our design and backend teams to turn ideas into engaging user experiences.",
         "responsibilities": [
@@ -334,7 +334,7 @@
           "Collaborative and innovative team"
         ]
       },
-      "job002": {
+      "job-002": {
         "title": "Back End Developer",
         "description": "We're looking for a Backend Developer to build and maintain the server-side of our web and mobile applications. You'll work with our team to create secure, scalable, and high-performance solutions.",
         "responsibilities": [
@@ -363,7 +363,7 @@
           "Collaborative and innovative team"
         ]
       },
-      "job003": {
+      "job-003": {
         "title": "Full Stack Developer",
         "description": "We're looking for a Full Stack Developer to build and maintain both the front-end and back-end of our web and mobile applications. You'll work across the stack to create secure, scalable, and seamless digital experiences.",
         "responsibilities": [
