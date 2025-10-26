@@ -8,31 +8,36 @@ import { TypeAnimation } from 'react-type-animation';
 import { MacbookScroll } from '@/components/ui/MacbookScroll';
 import { useTranslations } from '@/lib/LanguageContext';
 
-const features = [
-  {
-    icon: Zap,
-    title: 'Lightning Fast',
-    description: 'Experience unparalleled performance with our cutting-edge technology stack.',
-  },
-  {
-    icon: Shield,
-    title: 'Secure & Reliable',
-    description: 'Enterprise-grade security ensuring your data is always protected.',
-  },
-  {
-    icon: Cpu,
-    title: 'AI-Powered',
-    description: 'Leverage artificial intelligence to automate and optimize your workflows.',
-  },
-  {
-    icon: Sparkles,
-    title: 'Innovative Solutions',
-    description: 'Stay ahead with our constantly evolving suite of innovative tools.',
-  },
-];
-
 export default function HomePage() {
   const t = useTranslations('pricing');
+  const tHero = useTranslations('hero');
+  const tFeatures = useTranslations('features');
+  const tPartners = useTranslations('partners');
+  const tCta = useTranslations('cta');
+  const tMacbook = useTranslations('macbook');
+
+  const features = [
+    {
+      icon: Zap,
+      title: tFeatures('items.fast.title'),
+      description: tFeatures('items.fast.description'),
+    },
+    {
+      icon: Shield,
+      title: tFeatures('items.secure.title'),
+      description: tFeatures('items.secure.description'),
+    },
+    {
+      icon: Cpu,
+      title: tFeatures('items.ai.title'),
+      description: tFeatures('items.ai.description'),
+    },
+    {
+      icon: Sparkles,
+      title: tFeatures('items.innovative.title'),
+      description: tFeatures('items.innovative.description'),
+    },
+  ];
 
   const pricingPlans = [
     {
@@ -134,11 +139,11 @@ export default function HomePage() {
             <div className="text-cyber-blue text-sm md:text-base font-semibold mb-4">
               <TypeAnimation
                 sequence={[
-                  'WELCOME TO THE FUTURE',
+                  tHero('typingAnimation.welcome'),
                   2000,
-                  'INNOVATION STARTS HERE',
+                  tHero('typingAnimation.innovation'),
                   2000,
-                  'BUILD SOMETHING AMAZING',
+                  tHero('typingAnimation.build'),
                   2000,
                 ]}
                 wrapper="span"
@@ -149,18 +154,16 @@ export default function HomePage() {
 
             {/* Main Heading */}
             <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold">
-              <span className="text-gradient">Cubiclabs</span>
+              <span className="text-gradient">{tHero('title')}</span>
             </h1>
             <p className="text-xl md:text-2xl lg:text-3xl text-gray-300 max-w-3xl mx-auto">
-              Building tomorrow&apos;s technology,{' '}
-              <span className="text-cyber-pink font-semibold">today</span>
+              {tHero('subtitle')}{' '}
+              <span className="text-cyber-pink font-semibold">{tHero('subtitleHighlight')}</span>
             </p>
 
             {/* Description */}
             <p className="text-gray-400 text-lg max-w-2xl mx-auto">
-              We craft cutting-edge digital experiences that push the boundaries
-              of what&apos;s possible. Join us on a journey into the future of
-              technology.
+              {tHero('description')}
             </p>
 
             {/* CTA Buttons */}
@@ -172,7 +175,7 @@ export default function HomePage() {
                   className="group relative px-8 py-4 bg-gradient-to-r from-cyber-blue to-cyber-pink rounded-lg font-semibold text-lg overflow-hidden"
                 >
                   <span className="relative z-10 flex items-center gap-2">
-                    Get Started
+                    {tHero('ctaPrimary')}
                     <ArrowRight className="group-hover:translate-x-1 transition-transform" />
                   </span>
                   <motion.div
@@ -188,7 +191,7 @@ export default function HomePage() {
                   whileTap={{ scale: 0.95 }}
                   className="px-8 py-4 glass rounded-lg font-semibold text-lg hover:bg-white/10 transition-all"
                 >
-                  Learn More
+                  {tHero('ctaSecondary')}
                 </motion.button>
               </Link>
             </div>
@@ -217,8 +220,8 @@ export default function HomePage() {
         <MacbookScroll
           title={
             <span>
-              Experience our platform <br />
-              in <span className="text-gradient">stunning detail</span>
+              {tMacbook('title')} <br />
+              <span className="text-gradient">{tMacbook('titleHighlight')}</span>
             </span>
           }
           src="/images/website.png"
@@ -237,11 +240,10 @@ export default function HomePage() {
             className="text-center mb-16"
           >
             <h2 className="text-4xl md:text-5xl font-bold mb-4">
-              Why Choose <span className="text-gradient">Cubiclabs</span>?
+              {tFeatures('title')} <span className="text-gradient">{tFeatures('titleHighlight')}</span>?
             </h2>
             <p className="text-gray-400 text-lg max-w-2xl mx-auto">
-              We combine innovation with reliability to deliver exceptional
-              results.
+              {tFeatures('subtitle')}
             </p>
           </motion.div>
 
@@ -284,10 +286,10 @@ export default function HomePage() {
             className="text-center mb-12"
           >
             <h2 className="text-4xl md:text-5xl font-bold mb-4">
-              Trusted by <span className="text-gradient">Industry Leaders</span>
+              {tPartners('title')} <span className="text-gradient">{tPartners('titleHighlight')}</span>
             </h2>
             <p className="text-gray-400 text-lg">
-              Partnering with innovative companies to deliver excellence
+              {tPartners('subtitle')}
             </p>
           </motion.div>
 
@@ -455,11 +457,10 @@ export default function HomePage() {
             className="glass-dark p-12 rounded-2xl cyber-border"
           >
             <h2 className="text-4xl md:text-5xl font-bold mb-6">
-              Ready to <span className="text-gradient">Transform</span> Your
-              Business?
+              {tCta('title')} <span className="text-gradient">{tCta('titleHighlight')}</span> {tCta('subtitle')}
             </h2>
             <p className="text-gray-300 text-lg mb-8">
-              Let&apos;s build something extraordinary together.
+              {tCta('description')}
             </p>
             <Link href="/contact">
               <motion.button
@@ -467,7 +468,7 @@ export default function HomePage() {
                 whileTap={{ scale: 0.95 }}
                 className="px-8 py-4 bg-gradient-to-r from-cyber-blue to-cyber-pink rounded-lg font-semibold text-lg"
               >
-                Start Your Project
+                {tCta('button')}
               </motion.button>
             </Link>
           </motion.div>
