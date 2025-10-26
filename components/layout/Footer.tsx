@@ -69,15 +69,15 @@ export default function Footer() {
             <h3 className="text-white font-semibold mb-4">{t('connect')}</h3>
             <ul className="space-y-3">
               <li className="flex items-start space-x-2 text-gray-400 text-sm">
-                <MapPin size={16} className="mt-1 flex-shrink-0 text-cyber-blue" />
+                <MapPin size={16} className="mt-1 flex-shrink-0 text-cyber-blue w-4 h-4" />
                 <span>{t('address')}</span>
               </li>
               <li className="flex items-start space-x-2 text-gray-400 text-sm">
-                <Phone size={16} className="mt-1 flex-shrink-0 text-cyber-blue" />
+                <Phone size={16} className="mt-1 flex-shrink-0 text-cyber-blue w-4 h-4" />
                 <span dir="ltr" className="inline-block">+965 41147331</span>
               </li>
               <li className="flex items-start space-x-2 text-gray-400 text-sm">
-                <Mail size={16} className="mt-1 flex-shrink-0 text-cyber-blue" />
+                <Mail size={16} className="mt-1 flex-shrink-0 text-cyber-blue w-4 h-4" />
                 <span dir="ltr" className="inline-block">info@cubiclabs.net</span>
               </li>
             </ul>
@@ -95,9 +95,10 @@ export default function Footer() {
                   rel="noopener noreferrer"
                   whileHover={{ scale: 1.1, y: -2 }}
                   whileTap={{ scale: 0.95 }}
-                  className="w-10 h-10 rounded-lg glass flex items-center justify-center hover:bg-gradient-to-br hover:from-cyber-blue/20 hover:to-cyber-pink/20 transition-all group"
+                  className="w-10 h-10 rounded-lg glass inline-flex items-center justify-center hover:bg-gradient-to-br hover:from-cyber-blue/20 hover:to-cyber-pink/20 transition-all group relative"
+                  style={{ display: 'inline-flex' }}
                 >
-                  <social.icon size={20} className="text-gray-400 group-hover:text-white transition-colors flex-shrink-0" />
+                  <social.icon size={20} className="text-gray-400 group-hover:text-white transition-colors" style={{ width: '20px', height: '20px', display: 'block', margin: 'auto' }} />
                 </motion.a>
               ))}
             </div>
