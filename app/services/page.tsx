@@ -97,7 +97,7 @@ export default function ServicesPage() {
               Ready to Get <span className="text-gradient">Started</span>?
             </h2>
             <p className="text-gray-300 text-lg mb-8">
-              Let's discuss how we can help bring your vision to life
+              Let&apos;s discuss how we can help bring your vision to life
             </p>
             <Link href="/contact">
               <motion.button

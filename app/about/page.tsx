@@ -2,6 +2,7 @@
 
 import { motion } from 'framer-motion';
 import { Target, Eye, Users, Award, Rocket, Heart } from 'lucide-react';
+import Image from 'next/image';
 
 const values = [
   {
@@ -27,11 +28,11 @@ const values = [
 ];
 
 const timeline = [
-  { year: '2020', title: 'Founded', description: 'Cubiclabs was born from a vision to revolutionize technology.' },
-  { year: '2021', title: 'First Product', description: 'Launched our flagship product serving 1000+ customers.' },
-  { year: '2022', title: 'Expansion', description: 'Grew team to 50+ talented individuals across 3 countries.' },
-  { year: '2023', title: 'Innovation', description: 'Introduced AI-powered solutions and won industry awards.' },
-  { year: '2024', title: 'Global Reach', description: 'Serving clients worldwide with cutting-edge technology.' },
+  {
+    year: 'May 2025',
+    title: 'The Beginning',
+    description: 'Born from a vision to revolutionize digital experiences, Cubiclabs was founded by a passionate team of 6 innovators committed to delivering cutting-edge, scalable web solutions that push the boundaries of what\'s possible.'
+  },
 ];
 
 export default function AboutPage() {
@@ -202,12 +203,11 @@ export default function AboutPage() {
       {/* Stats Section */}
       <section className="py-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-4xl mx-auto">
             {[
-              { number: '5+', label: 'Years Experience' },
-              { number: '1000+', label: 'Happy Clients' },
-              { number: '50+', label: 'Team Members' },
-              { number: '100+', label: 'Projects Delivered' },
+              { number: '3+', label: 'Trusted Partners' },
+              { number: '5+', label: 'Dedicated Innovators' },
+              { number: '3+', label: 'Solutions Delivered' },
             ].map((stat, index) => (
               <motion.div
                 key={stat.label}
@@ -258,9 +258,11 @@ export default function AboutPage() {
               className="glass p-16 rounded-2xl flex items-center justify-center hover:bg-white/5 transition-all group aspect-square relative overflow-hidden"
             >
               <div className="absolute inset-0 bg-white/95 group-hover:bg-white transition-colors"></div>
-              <img
+              <Image
                 src="/images/armada.svg"
                 alt="Armada Delivery"
+                width={300}
+                height={96}
                 className="w-full h-auto max-h-24 object-contain relative z-10"
               />
             </motion.a>
@@ -277,9 +279,11 @@ export default function AboutPage() {
               className="glass p-16 rounded-2xl flex items-center justify-center hover:bg-white/5 transition-all group aspect-square relative overflow-hidden"
             >
               <div className="absolute inset-0 bg-white/95 group-hover:bg-white transition-colors"></div>
-              <img
+              <Image
                 src="/images/upayments.svg"
                 alt="Upayments"
+                width={300}
+                height={96}
                 className="w-full h-auto max-h-24 object-contain relative z-10"
               />
             </motion.a>
@@ -315,9 +319,11 @@ export default function AboutPage() {
               className="glass p-16 rounded-2xl flex items-center justify-center hover:bg-white/5 transition-all w-full max-w-md aspect-square relative overflow-hidden"
             >
               <div className="absolute inset-0 bg-white/95 hover:bg-white transition-colors"></div>
-              <img
+              <Image
                 src="/images/miro.png"
                 alt="Miro"
+                width={300}
+                height={96}
                 className="w-full h-auto max-h-24 object-contain relative z-10"
               />
             </motion.div>
