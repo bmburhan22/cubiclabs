@@ -6,7 +6,7 @@ import { ArrowRight, Zap, Shield, Cpu, Sparkles, Check } from 'lucide-react';
 import HeroScene from '@/components/3d/HeroScene';
 import { TypeAnimation } from 'react-type-animation';
 import { MacbookScroll } from '@/components/ui/MacbookScroll';
-import { useTranslations } from '@/lib/LanguageContext';
+import { useTranslations, useLanguage } from '@/lib/LanguageContext';
 
 export default function HomePage() {
   const t = useTranslations('pricing');
@@ -15,6 +15,7 @@ export default function HomePage() {
   const tPartners = useTranslations('partners');
   const tCta = useTranslations('cta');
   const tMacbook = useTranslations('macbook');
+  const { locale } = useLanguage();
 
   const features = [
     {
@@ -138,6 +139,7 @@ export default function HomePage() {
             {/* Typing Animation */}
             <div className="text-cyber-blue text-sm md:text-base font-semibold mb-4">
               <TypeAnimation
+                key={locale}
                 sequence={[
                   tHero('typingAnimation.welcome'),
                   2000,
