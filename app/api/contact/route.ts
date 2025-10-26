@@ -4,7 +4,7 @@ import { createTransporter, getContactEmailTemplate } from '@/lib/email/config';
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { name, email, subject, message } = body;
+    const { name, email, phone, subject, message } = body;
 
     // Validate required fields
     if (!name || !email || !subject || !message) {
@@ -34,7 +34,7 @@ export async function POST(request: NextRequest) {
 
     // Create transporter and send email
     const transporter = createTransporter();
-    const mailOptions = getContactEmailTemplate({ name, email, subject, message });
+    const mailOptions = getContactEmailTemplate({ name, email, phone, subject, message });
 
     await transporter.sendMail(mailOptions);
 

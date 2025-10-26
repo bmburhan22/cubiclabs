@@ -1,6 +1,6 @@
 "use client";
-import React, { useEffect, useRef, useState } from "react";
-import { motion, useScroll, useTransform } from "framer-motion";
+import React, { useEffect, useRef, useState, useCallback } from "react";
+import { motion, useMotionValue, useTransform } from "framer-motion";
 
 export const MacbookScroll = ({
   src,
@@ -14,12 +14,13 @@ export const MacbookScroll = ({
   badge?: React.ReactNode;
 }) => {
   const ref = useRef<HTMLDivElement>(null);
-  const { scrollYProgress } = useScroll({
-    target: ref,
-    offset: ["start end", "end start"],
-  });
-
   const [isMobile, setIsMobile] = useState(false);
+  const [isInAnimationZone, setIsInAnimationZone] = useState(false);
+  const [animationComplete, setAnimationComplete] = useState(false);
+  const [scrollCooldown, setScrollCooldown] = useState(false);
+
+  // Manual animation progress (0 to 1)
+  const animationProgress = useMotionValue(0);
 
   useEffect(() => {
     if (window && window.innerWidth < 768) {
@@ -27,40 +28,107 @@ export const MacbookScroll = ({
     }
   }, []);
 
-  // Scale animations - delayed to start after MacBook is centered
+  // Handle scroll events
+  useEffect(() => {
+    const handleWheel = (e: WheelEvent) => {
+      if (!ref.current) return;
+
+      const rect = ref.current.getBoundingClientRect();
+      const isMacbookCentered = rect.top <= 0 && rect.bottom > window.innerHeight;
+
+      // During cooldown, consume events but don't do anything
+      if (scrollCooldown) {
+        e.preventDefault();
+        e.stopPropagation();
+        return;
+      }
+
+      // Check if MacBook is centered and animation not complete
+      if (isMacbookCentered && !animationComplete) {
+        // Only prevent scroll if scrolling down (not up)
+        if (e.deltaY > 0) {
+          e.preventDefault();
+          e.stopPropagation();
+          setIsInAnimationZone(true);
+
+          // Update animation progress based on scroll delta
+          const delta = e.deltaY;
+          const progressDelta = delta / 1500; // Adjust sensitivity
+          const currentProgress = animationProgress.get();
+          const newProgress = Math.max(0, Math.min(1, currentProgress + progressDelta));
+
+          animationProgress.set(newProgress);
+
+          // Mark animation as complete
+          if (newProgress >= 0.99) {
+            setAnimationComplete(true);
+            setIsInAnimationZone(false);
+            setScrollCooldown(true);
+
+            // Clear cooldown after a delay to prevent queued scrolls
+            setTimeout(() => {
+              setScrollCooldown(false);
+            }, 500);
+          }
+        }
+      } else {
+        setIsInAnimationZone(false);
+      }
+    };
+
+    const handleScroll = () => {
+      if (!ref.current) return;
+      const rect = ref.current.getBoundingClientRect();
+
+      // Reset animation if user scrolls back up
+      if (rect.top > 100) {
+        setAnimationComplete(false);
+        setScrollCooldown(false);
+        animationProgress.set(0);
+      }
+    };
+
+    window.addEventListener('wheel', handleWheel, { passive: false });
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('wheel', handleWheel);
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, [animationComplete, animationProgress, scrollCooldown]);
+
+  // Scale animations - controlled by animationProgress
   const scaleX = useTransform(
-    scrollYProgress,
-    [0, 0.3, 0.5, 1],
-    [1.2, 1.2, isMobile ? 1 : 1.5, isMobile ? 1 : 1.5]
+    animationProgress,
+    [0, 0.5, 1],
+    [1.2, 1.2, isMobile ? 1 : 1.5]
   );
   const scaleY = useTransform(
-    scrollYProgress,
-    [0, 0.3, 0.5, 1],
-    [0.6, 0.6, isMobile ? 1 : 1.5, isMobile ? 1 : 1.5]
+    animationProgress,
+    [0, 0.5, 1],
+    [0.6, 0.8, isMobile ? 1 : 1.5]
   );
 
-  // Rotation - starts after centering
+  // Rotation - controlled by animationProgress
   const rotate = useTransform(
-    scrollYProgress,
-    [0, 0.3, 0.4, 0.5],
-    [-28, -28, -10, 0]
+    animationProgress,
+    [0, 0.3, 0.6, 1],
+    [-28, -15, -5, 0]
   );
 
   // Text animations
-  const textTransform = useTransform(scrollYProgress, [0, 0.25], [0, -100]);
-  const textOpacity = useTransform(scrollYProgress, [0, 0.15, 0.25], [1, 1, 0]);
+  const textOpacity = useTransform(animationProgress, [0, 0.2], [1, 0]);
 
   return (
     <div
       ref={ref}
-      className="min-h-[300vh] flex flex-col items-center justify-start flex-shrink-0 [perspective:800px] transform md:scale-100 scale-[0.35] sm:scale-50 relative"
+      className="min-h-[300vh] flex flex-col items-start justify-start flex-shrink-0 [perspective:800px] transform md:scale-100 scale-[0.35] sm:scale-50 relative py-20"
     >
       <motion.div
         style={{
-          translateY: textTransform,
           opacity: textOpacity,
         }}
-        className="div max-w-5xl mb-20 text-center pt-40"
+        className="w-full max-w-5xl mx-auto text-center mb-[50vh] z-0"
       >
         {badge && <div className="mb-4">{badge}</div>}
         {title && (
@@ -70,19 +138,21 @@ export const MacbookScroll = ({
         )}
       </motion.div>
 
-      {/* Sticky Container */}
-      <div className="sticky top-1/2 -translate-y-1/2 z-10">
-        <Lid
-          src={src}
-          scaleX={scaleX}
-          scaleY={scaleY}
-          rotate={rotate}
-        />
-        <Base />
+      {/* MacBook - centers when scrolled into view, then animates */}
+      <div className="sticky top-1/2 -translate-y-1/2 z-10 w-full flex items-center justify-center">
+        <div className="relative">
+          <Lid
+            src={src}
+            scaleX={scaleX}
+            scaleY={scaleY}
+            rotate={rotate}
+          />
+          <Base />
+        </div>
       </div>
 
-      {/* Spacer for scroll */}
-      <div className="h-[100vh]" />
+      {/* Spacer to allow scrolling past after animation */}
+      <div className="h-[150vh]" />
     </div>
   );
 };

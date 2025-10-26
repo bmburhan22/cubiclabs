@@ -15,6 +15,7 @@ export default function Navbar() {
   const navLinks = [
     { href: '/', label: t('home') },
     { href: '/about', label: t('about') },
+    { href: '/services', label: t('services') },
     { href: '/pricing', label: t('pricing') },
     { href: '/careers', label: t('careers') },
     { href: '/contact', label: t('contact') },

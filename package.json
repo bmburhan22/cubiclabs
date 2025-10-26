@@ -26,6 +26,7 @@
     "react-dom": "^18.3.0",
     "react-hook-form": "^7.51.5",
     "react-hot-toast": "^2.4.1",
+    "react-international-phone": "^4.6.0",
     "react-scroll-parallax": "^3.4.5",
     "react-type-animation": "^3.2.0",
     "three": "^0.163.0",

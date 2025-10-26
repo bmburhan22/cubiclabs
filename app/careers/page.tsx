@@ -35,10 +35,35 @@ interface Job {
 
 const departments = ['All', 'Engineering', 'Design', 'Product'];
 
+const countryCodes = [
+  { code: '+965', country: 'Kuwait' },
+  { code: '+1', country: 'US/Canada' },
+  { code: '+44', country: 'United Kingdom' },
+  { code: '+91', country: 'India' },
+  { code: '+86', country: 'China' },
+  { code: '+81', country: 'Japan' },
+  { code: '+49', country: 'Germany' },
+  { code: '+33', country: 'France' },
+  { code: '+61', country: 'Australia' },
+  { code: '+971', country: 'UAE' },
+  { code: '+966', country: 'Saudi Arabia' },
+  { code: '+20', country: 'Egypt' },
+  { code: '+27', country: 'South Africa' },
+  { code: '+234', country: 'Nigeria' },
+  { code: '+55', country: 'Brazil' },
+  { code: '+52', country: 'Mexico' },
+  { code: '+7', country: 'Russia' },
+  { code: '+82', country: 'South Korea' },
+  { code: '+65', country: 'Singapore' },
+  { code: '+60', country: 'Malaysia' },
+  { code: '+62', country: 'Indonesia' },
+];
+
 const generalApplicationSchema = z.object({
   name: z.string().min(2, 'Name must be at least 2 characters'),
   email: z.string().email('Invalid email address'),
-  phone: z.string().min(10, 'Phone number must be at least 10 characters'),
+  countryCode: z.string().min(1, 'Please select a country code'),
+  phone: z.string().min(4, 'Phone number must be at least 4 digits').max(15, 'Phone number cannot exceed 15 digits').regex(/^[0-9]+$/, 'Phone number must contain only digits'),
   address: z.string().min(5, 'Address must be at least 5 characters'),
   message: z.string().optional(),
 });
@@ -91,7 +116,7 @@ export default function CareersPage() {
       const formData = new FormData();
       formData.append('name', data.name);
       formData.append('email', data.email);
-      formData.append('phone', data.phone);
+      formData.append('phone', `${data.countryCode} ${data.phone}`);
       formData.append('address', data.address || '');
       formData.append('message', data.message || '');
       formData.append('jobId', 'GENERAL');
@@ -420,18 +445,35 @@ export default function CareersPage() {
 
                 {/* Phone */}
                 <div>
-                  <label htmlFor="gen-phone" className="block text-sm font-medium mb-2">
-                    Phone <span className="text-cyber-pink">*</span>
+                  <label className="block text-sm font-medium mb-2">
+                    Phone Number <span className="text-cyber-pink">*</span>
                   </label>
-                  <input
-                    {...register('phone')}
-                    type="tel"
-                    id="gen-phone"
-                    className="w-full px-4 py-3 rounded-lg glass border border-white/10 focus:border-cyber-blue focus:outline-none transition-colors"
-                    placeholder="+1 (555) 123-4567"
-                  />
-                  {errors.phone && (
-                    <p className="text-red-400 text-sm mt-1">{errors.phone.message}</p>
+                  <div className="flex gap-2">
+                    {/* Country Code */}
+                    <select
+                      {...register('countryCode')}
+                      className="w-32 px-3 py-3 rounded-lg glass border border-white/10 focus:border-cyber-blue focus:outline-none transition-colors"
+                    >
+                      <option value="">Code</option>
+                      {countryCodes.map((country) => (
+                        <option key={country.code} value={country.code}>
+                          {country.code} {country.country}
+                        </option>
+                      ))}
+                    </select>
+                    {/* Phone Number */}
+                    <input
+                      {...register('phone')}
+                      type="tel"
+                      id="gen-phone"
+                      className="flex-1 px-4 py-3 rounded-lg glass border border-white/10 focus:border-cyber-blue focus:outline-none transition-colors"
+                      placeholder="123456789"
+                    />
+                  </div>
+                  {(errors.countryCode || errors.phone) && (
+                    <p className="text-red-400 text-sm mt-1">
+                      {errors.countryCode?.message || errors.phone?.message}
+                    </p>
                   )}
                 </div>
 

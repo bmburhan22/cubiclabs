@@ -15,6 +15,7 @@ export const createTransporter = () => {
 export const getContactEmailTemplate = (data: {
   name: string;
   email: string;
+  phone?: string;
   subject: string;
   message: string;
 }) => {
@@ -48,6 +49,12 @@ export const getContactEmailTemplate = (data: {
                 <div class="label">From:</div>
                 <div class="value">${data.name} (${data.email})</div>
               </div>
+              ${data.phone ? `
+              <div class="field">
+                <div class="label">Phone:</div>
+                <div class="value">${data.phone}</div>
+              </div>
+              ` : ''}
               <div class="field">
                 <div class="label">Subject:</div>
                 <div class="value">${data.subject}</div>
@@ -69,7 +76,7 @@ export const getContactEmailTemplate = (data: {
 Contact Form Submission
 
 From: ${data.name} (${data.email})
-Subject: ${data.subject}
+${data.phone ? `Phone: ${data.phone}\n` : ''}Subject: ${data.subject}
 
 Message:
 ${data.message}
@@ -84,17 +91,25 @@ export const getApplicationEmailTemplate = (data: {
   name: string;
   email: string;
   phone: string;
-  address: string;
   jobId: string;
   jobTitle: string;
   message?: string;
   cvFileName?: string;
+  cvBuffer?: Buffer;
+  cvMimeType?: string;
 }) => {
   return {
     from: process.env.GMAIL_USER,
     to: process.env.GMAIL_USER, // Send to yourself
     replyTo: data.email,
     subject: `Job Application: ${data.jobTitle} - ${data.name}`,
+    attachments: data.cvBuffer ? [
+      {
+        filename: data.cvFileName || 'resume.pdf',
+        content: data.cvBuffer,
+        contentType: data.cvMimeType || 'application/pdf',
+      },
+    ] : [],
     html: `
       <!DOCTYPE html>
       <html>
@@ -137,15 +152,10 @@ export const getApplicationEmailTemplate = (data: {
                 <div class="value">${data.phone}</div>
               </div>
 
-              <div class="field">
-                <div class="label">Address:</div>
-                <div class="value">${data.address}</div>
-              </div>
-
               ${data.cvFileName ? `
               <div class="field">
                 <div class="label">CV/Resume:</div>
-                <div class="value">📎 ${data.cvFileName}</div>
+                <div class="value">📎 ${data.cvFileName} (attached)</div>
               </div>
               ` : ''}
 
@@ -175,9 +185,8 @@ Applicant Details:
 Name: ${data.name}
 Email: ${data.email}
 Phone: ${data.phone}
-Address: ${data.address}
 
-${data.cvFileName ? `CV/Resume: ${data.cvFileName}\n` : ''}
+${data.cvFileName ? `CV/Resume: ${data.cvFileName} (attached)\n` : ''}
 ${data.message ? `\nCover Letter:\n${data.message}\n` : ''}
 
 ---

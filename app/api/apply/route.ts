@@ -3,11 +3,17 @@ import { createTransporter, getApplicationEmailTemplate } from '@/lib/email/conf
 
 export async function POST(request: NextRequest) {
   try {
-    const body = await request.json();
-    const { name, email, phone, address, jobId, jobTitle, message, cvFileName } = body;
+    const formData = await request.formData();
+    const name = formData.get('name') as string;
+    const email = formData.get('email') as string;
+    const phone = formData.get('phone') as string;
+    const jobId = formData.get('jobId') as string;
+    const jobTitle = formData.get('jobTitle') as string;
+    const message = formData.get('message') as string;
+    const cvFile = formData.get('cv') as File;
 
     // Validate required fields
-    if (!name || !email || !phone || !address || !jobId || !jobTitle) {
+    if (!name || !email || !phone || !jobId || !jobTitle || !cvFile) {
       return NextResponse.json(
         { error: 'All required fields must be filled' },
         { status: 400 }
@@ -32,17 +38,21 @@ export async function POST(request: NextRequest) {
       );
     }
 
+    // Convert file to buffer for email attachment
+    const cvBuffer = Buffer.from(await cvFile.arrayBuffer());
+
     // Create transporter and send email
     const transporter = createTransporter();
     const mailOptions = getApplicationEmailTemplate({
       name,
       email,
       phone,
-      address,
       jobId,
       jobTitle,
       message,
-      cvFileName,
+      cvFileName: cvFile.name,
+      cvBuffer,
+      cvMimeType: cvFile.type,
     });
 
     await transporter.sendMail(mailOptions);

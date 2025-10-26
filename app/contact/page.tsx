@@ -2,16 +2,19 @@
 
 import { useState } from 'react';
 import { motion } from 'framer-motion';
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import toast from 'react-hot-toast';
 import { Mail, MapPin, Phone, Send } from 'lucide-react';
+import { PhoneInput } from 'react-international-phone';
+import 'react-international-phone/style.css';
 // Email sending via API route
 
 const contactSchema = z.object({
   name: z.string().min(2, 'Name must be at least 2 characters'),
   email: z.string().email('Invalid email address'),
+  phone: z.string().optional(),
   subject: z.string().min(3, 'Subject must be at least 3 characters'),
   message: z.string().min(10, 'Message must be at least 10 characters'),
 });
@@ -22,17 +25,17 @@ const contactInfo = [
   {
     icon: MapPin,
     title: 'Address',
-    content: '123 Tech Street, Innovation City, IC 12345',
+    content: 'Kuwait City, Qibla, Salhiya Street, Luhaib (3), Office No: 213',
   },
   {
     icon: Phone,
     title: 'Phone',
-    content: '+1 (555) 123-4567',
+    content: '+965 41147331',
   },
   {
     icon: Mail,
     title: 'Email',
-    content: 'info@cubiclabs.com',
+    content: 'info@cubiclabs.net',
   },
 ];
 
@@ -43,9 +46,13 @@ export default function ContactPage() {
     register,
     handleSubmit,
     reset,
+    control,
     formState: { errors },
   } = useForm<ContactFormData>({
     resolver: zodResolver(contactSchema),
+    defaultValues: {
+      phone: '',
+    },
   });
 
   const onSubmit = async (data: ContactFormData) => {
@@ -143,6 +150,30 @@ export default function ContactPage() {
                   />
                   {errors.email && (
                     <p className="text-red-400 text-sm mt-1">{errors.email.message}</p>
+                  )}
+                </div>
+
+                {/* Phone (Optional) */}
+                <div>
+                  <label className="block text-sm font-medium mb-2">
+                    Phone Number (Optional)
+                  </label>
+                  <Controller
+                    name="phone"
+                    control={control}
+                    render={({ field: { onChange, value } }) => (
+                      <PhoneInput
+                        value={value}
+                        onChange={onChange}
+                        defaultCountry="kw"
+                        className="international-phone-input"
+                      />
+                    )}
+                  />
+                  {errors.phone && (
+                    <p className="text-red-400 text-sm mt-1">
+                      {errors.phone.message}
+                    </p>
                   )}
                 </div>
 
@@ -253,9 +284,8 @@ export default function ContactPage() {
               >
                 <h3 className="text-xl font-semibold mb-3">Business Hours</h3>
                 <div className="space-y-2 text-gray-400">
-                  <p>Monday - Friday: 9:00 AM - 6:00 PM</p>
-                  <p>Saturday: 10:00 AM - 4:00 PM</p>
-                  <p>Sunday: Closed</p>
+                  <p>Saturday - Thursday: 9:00 AM - 6:00 PM</p>
+                  <p>Friday: Closed</p>
                 </div>
               </motion.div>
             </motion.div>

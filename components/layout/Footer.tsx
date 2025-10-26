@@ -12,7 +12,7 @@ export default function Footer() {
 
   const socialLinks = [
     { icon: Instagram, href: 'https://www.instagram.com/cubic_labs/', label: 'Instagram' },
-    { icon: Linkedin, href: 'https://linkedin.com', label: 'LinkedIn' },
+    { icon: Linkedin, href: 'https://www.linkedin.com/company/cubic-labskw/', label: 'LinkedIn' },
     { icon: Twitter, href: 'https://twitter.com', label: 'Twitter' },
     { icon: Mail, href: 'mailto:info@cubiclabs.net', label: 'Email' },
   ];
@@ -20,6 +20,7 @@ export default function Footer() {
   const quickLinks = [
     { href: '/', label: tNav('home') },
     { href: '/about', label: tNav('about') },
+    { href: '/services', label: tNav('services') },
     { href: '/pricing', label: tNav('pricing') },
     { href: '/careers', label: tNav('careers') },
     { href: '/contact', label: tNav('contact') },

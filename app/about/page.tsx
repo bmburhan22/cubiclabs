@@ -226,6 +226,104 @@ export default function AboutPage() {
           </div>
         </div>
       </section>
+
+      {/* Partners Section */}
+      <section className="py-20 bg-black/30">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-4xl md:text-5xl font-bold mb-4">
+              Our <span className="text-gradient">Partners</span>
+            </h2>
+            <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+              Collaborating with industry leaders to deliver exceptional results
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-10 max-w-4xl mx-auto">
+            <motion.a
+              href="https://www.armadadelivery.com/"
+              target="_blank"
+              rel="noopener noreferrer"
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+              whileHover={{ scale: 1.05 }}
+              className="glass p-16 rounded-2xl flex items-center justify-center hover:bg-white/5 transition-all group aspect-square relative overflow-hidden"
+            >
+              <div className="absolute inset-0 bg-white/95 group-hover:bg-white transition-colors"></div>
+              <img
+                src="/images/armada.svg"
+                alt="Armada Delivery"
+                className="w-full h-auto max-h-24 object-contain relative z-10"
+              />
+            </motion.a>
+
+            <motion.a
+              href="https://upayments.com/en/"
+              target="_blank"
+              rel="noopener noreferrer"
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5, delay: 0.1 }}
+              whileHover={{ scale: 1.05 }}
+              className="glass p-16 rounded-2xl flex items-center justify-center hover:bg-white/5 transition-all group aspect-square relative overflow-hidden"
+            >
+              <div className="absolute inset-0 bg-white/95 group-hover:bg-white transition-colors"></div>
+              <img
+                src="/images/upayments.svg"
+                alt="Upayments"
+                className="w-full h-auto max-h-24 object-contain relative z-10"
+              />
+            </motion.a>
+          </div>
+        </div>
+      </section>
+
+      {/* Clients Section */}
+      <section className="py-20">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="text-center mb-16"
+          >
+            <h2 className="text-4xl md:text-5xl font-bold mb-4">
+              Trusted <span className="text-gradient">Clients</span>
+            </h2>
+            <p className="text-gray-400 text-lg max-w-2xl mx-auto">
+              Proud to work with innovative companies worldwide
+            </p>
+          </motion.div>
+
+          <div className="flex justify-center">
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              whileInView={{ opacity: 1, scale: 1 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.5 }}
+              whileHover={{ scale: 1.05 }}
+              className="glass p-16 rounded-2xl flex items-center justify-center hover:bg-white/5 transition-all w-full max-w-md aspect-square relative overflow-hidden"
+            >
+              <div className="absolute inset-0 bg-white/95 hover:bg-white transition-colors"></div>
+              <img
+                src="/images/miro.png"
+                alt="Miro"
+                className="w-full h-auto max-h-24 object-contain relative z-10"
+              />
+            </motion.div>
+          </div>
+        </div>
+      </section>
     </div>
   );
 }

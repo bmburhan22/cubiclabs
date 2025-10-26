@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import { useForm } from 'react-hook-form';
+import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import toast from 'react-hot-toast';
@@ -16,6 +16,7 @@ import {
   Send,
   CheckCircle,
 } from 'lucide-react';
+import { PhoneInput } from 'react-international-phone';
 import jobsData from '@/data/jobs.json';
 // Email sending via API route
 
@@ -37,8 +38,7 @@ interface Job {
 const applicationSchema = z.object({
   name: z.string().min(2, 'Name must be at least 2 characters'),
   email: z.string().email('Invalid email address'),
-  phone: z.string().min(10, 'Phone number must be at least 10 characters'),
-  address: z.string().min(5, 'Address must be at least 5 characters'),
+  phone: z.string().min(8, 'Please enter a valid phone number'),
   message: z.string().optional(),
 });
 
@@ -59,9 +59,13 @@ export default function JobApplicationPage({
     register,
     handleSubmit,
     reset,
+    control,
     formState: { errors },
   } = useForm<ApplicationFormData>({
     resolver: zodResolver(applicationSchema),
+    defaultValues: {
+      phone: '',
+    },
   });
 
   useEffect(() => {
@@ -100,7 +104,6 @@ export default function JobApplicationPage({
       formData.append('name', data.name);
       formData.append('email', data.email);
       formData.append('phone', data.phone);
-      formData.append('address', data.address || '');
       formData.append('message', data.message || '');
       formData.append('jobId', job.id);
       formData.append('jobTitle', job.title);
@@ -316,38 +319,24 @@ export default function JobApplicationPage({
 
                 {/* Phone */}
                 <div>
-                  <label htmlFor="phone" className="block text-sm font-medium mb-2">
-                    Phone <span className="text-cyber-pink">*</span>
+                  <label className="block text-sm font-medium mb-2">
+                    Phone Number <span className="text-cyber-pink">*</span>
                   </label>
-                  <input
-                    {...register('phone')}
-                    type="tel"
-                    id="phone"
-                    className="w-full px-4 py-2 rounded-lg glass-dark border border-white/10 focus:border-cyber-blue focus:outline-none transition-colors text-sm"
-                    placeholder="+1 (555) 123-4567"
+                  <Controller
+                    name="phone"
+                    control={control}
+                    render={({ field: { onChange, value } }) => (
+                      <PhoneInput
+                        value={value}
+                        onChange={onChange}
+                        defaultCountry="kw"
+                        className="international-phone-input"
+                      />
+                    )}
                   />
                   {errors.phone && (
                     <p className="text-red-400 text-xs mt-1">
                       {errors.phone.message}
-                    </p>
-                  )}
-                </div>
-
-                {/* Address */}
-                <div>
-                  <label htmlFor="address" className="block text-sm font-medium mb-2">
-                    Address <span className="text-cyber-pink">*</span>
-                  </label>
-                  <input
-                    {...register('address')}
-                    type="text"
-                    id="address"
-                    className="w-full px-4 py-2 rounded-lg glass-dark border border-white/10 focus:border-cyber-blue focus:outline-none transition-colors text-sm"
-                    placeholder="City, Country"
-                  />
-                  {errors.address && (
-                    <p className="text-red-400 text-xs mt-1">
-                      {errors.address.message}
                     </p>
                   )}
                 </div>

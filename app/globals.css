@@ -140,3 +140,80 @@ html[lang="ar"] body {
 html[lang="en"] body {
   font-family: var(--font-inter), sans-serif;
 }
+
+/* International Phone Input Styling */
+.international-phone-input .react-international-phone-input-container {
+  width: 100%;
+  display: flex;
+}
+
+.international-phone-input .react-international-phone-input-container .react-international-phone-input {
+  width: 100%;
+  padding: 0.5rem 1rem;
+  border-radius: 0 0.5rem 0.5rem 0;
+  background: rgba(0, 0, 0, 0.3) !important;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-left: none;
+  color: white !important;
+  font-size: 0.875rem;
+  transition: border-color 0.2s;
+}
+
+.international-phone-input .react-international-phone-input-container .react-international-phone-input:focus {
+  outline: none;
+  border-color: #00f0ff;
+  background: rgba(0, 0, 0, 0.3) !important;
+}
+
+.international-phone-input .react-international-phone-country-selector-button {
+  padding: 0.5rem;
+  border-radius: 0.5rem 0 0 0.5rem;
+  background: rgba(0, 0, 0, 0.3) !important;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-right: none;
+  transition: background-color 0.2s;
+}
+
+.international-phone-input .react-international-phone-country-selector-button:hover {
+  background: rgba(0, 0, 0, 0.4) !important;
+}
+
+.international-phone-input .react-international-phone-country-selector-button__button-content {
+  color: white;
+}
+
+.international-phone-input .react-international-phone-country-selector-button__dropdown-arrow {
+  border-top-color: white;
+}
+
+.international-phone-input .react-international-phone-country-selector-dropdown {
+  background: rgba(10, 10, 20, 0.95) !important;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 0.5rem;
+  max-height: 300px;
+  overflow-y: auto;
+  z-index: 1000;
+}
+
+.international-phone-input .react-international-phone-country-selector-dropdown__list-item {
+  color: white !important;
+  background: transparent !important;
+  padding: 0.5rem 1rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.international-phone-input .react-international-phone-country-selector-dropdown__list-item:hover {
+  background: rgba(0, 240, 255, 0.1) !important;
+}
+
+.international-phone-input .react-international-phone-country-selector-dropdown__list-item--selected {
+  background: rgba(0, 240, 255, 0.2) !important;
+}
+
+.international-phone-input .react-international-phone-country-selector-dropdown__list-item--focused {
+  background: rgba(0, 240, 255, 0.15) !important;
+}
