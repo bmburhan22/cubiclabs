@@ -139,7 +139,7 @@ export default function HomePage() {
               in <span className="text-gradient">stunning detail</span>
             </span>
           }
-          src="/images/dashboard-screenshot.svg"
+          src="/website.png"
           showGradient={false}
         />
       </section>

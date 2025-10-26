@@ -1,26 +1,22 @@
-'use client';
+"use client";
+import React, { useEffect, useRef, useState } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 
-import React, { useRef, useEffect, useState } from 'react';
-import { motion, useScroll, useTransform } from 'framer-motion';
-import Image from 'next/image';
-
-interface MacbookScrollProps {
-  src?: string;
-  showGradient?: boolean;
-  title?: React.ReactNode;
-  badge?: React.ReactNode;
-}
-
-export const MacbookScroll: React.FC<MacbookScrollProps> = ({
+export const MacbookScroll = ({
   src,
-  showGradient = true,
+  showGradient,
   title,
   badge,
+}: {
+  src?: string;
+  showGradient?: boolean;
+  title?: string | React.ReactNode;
+  badge?: React.ReactNode;
 }) => {
   const ref = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll({
     target: ref,
-    offset: ['start start', 'end start'],
+    offset: ["start end", "end start"],
   });
 
   const [isMobile, setIsMobile] = useState(false);
@@ -31,673 +27,220 @@ export const MacbookScroll: React.FC<MacbookScrollProps> = ({
     }
   }, []);
 
-  // Zoom animation - starts at 1 and scales up massively to create zoom-in effect
-  const scale = useTransform(
+  // Scale animations - delayed to start after MacBook is centered
+  const scaleX = useTransform(
     scrollYProgress,
-    [0, 0.5, 1],
-    [1, isMobile ? 3 : 6, isMobile ? 5 : 10]
+    [0, 0.3, 0.5, 1],
+    [1.2, 1.2, isMobile ? 1 : 1.5, isMobile ? 1 : 1.5]
+  );
+  const scaleY = useTransform(
+    scrollYProgress,
+    [0, 0.3, 0.5, 1],
+    [0.6, 0.6, isMobile ? 1 : 1.5, isMobile ? 1 : 1.5]
   );
 
-  // Subtle Y translation to bring the MacBook forward
-  const translateY = useTransform(scrollYProgress, [0, 0.5, 1], [0, -50, -100]);
-
-  // Rotate from angled to flat as we zoom in
-  const rotate = useTransform(scrollYProgress, [0, 0.2, 0.4], [-25, -10, 0]);
+  // Rotation - starts after centering
+  const rotate = useTransform(
+    scrollYProgress,
+    [0, 0.3, 0.4, 0.5],
+    [-28, -28, -10, 0]
+  );
 
   // Text animations
-  const textTransform = useTransform(scrollYProgress, [0, 0.2], [0, 100]);
-  const textOpacity = useTransform(scrollYProgress, [0, 0.15], [1, 0]);
+  const textTransform = useTransform(scrollYProgress, [0, 0.25], [0, -100]);
+  const textOpacity = useTransform(scrollYProgress, [0, 0.15, 0.25], [1, 1, 0]);
 
   return (
     <div
       ref={ref}
-      className="min-h-[300vh] flex flex-col items-center py-0 md:py-40 justify-start flex-shrink-0 transform md:scale-100 scale-[0.35] sm:scale-50"
+      className="min-h-[300vh] flex flex-col items-center justify-start flex-shrink-0 [perspective:800px] transform md:scale-100 scale-[0.35] sm:scale-50 relative"
     >
-      <motion.h2
+      <motion.div
         style={{
           translateY: textTransform,
           opacity: textOpacity,
         }}
-        className="mb-20 text-center text-3xl font-bold text-white md:text-7xl"
+        className="div max-w-5xl mb-20 text-center pt-40"
       >
-        {title || (
-          <span>
-            This Macbook is built with Tailwindcss. <br /> No kidding.
-          </span>
+        {badge && <div className="mb-4">{badge}</div>}
+        {title && (
+          <h1 className="text-4xl md:text-7xl font-bold bg-clip-text text-transparent bg-gradient-to-b from-neutral-50 to-neutral-400">
+            {title}
+          </h1>
         )}
-      </motion.h2>
-      {/* Lid */}
-      <Lid
-        src={src}
-        scale={scale}
-        rotate={rotate}
-        translateY={translateY}
-      />
-      {/* Base area */}
-      <div className="relative -z-10 h-[22rem] w-[32rem] overflow-hidden rounded-2xl bg-gray-200 dark:bg-[#272729]">
-        {/* above keyboard bar */}
-        <div className="relative h-10 w-full">
-          <div className="absolute inset-x-0 mx-auto h-4 w-[80%] bg-[#050505]" />
-        </div>
-        <div className="relative flex">
-          <div className="mx-auto h-full w-[10%] overflow-hidden">
-            <SpeakerGrid />
-          </div>
-          <div className="mx-auto h-full w-[80%]">
-            <Keypad />
-          </div>
-          <div className="mx-auto h-full w-[10%] overflow-hidden">
-            <SpeakerGrid />
-          </div>
-        </div>
-        <Trackpad />
-        <div className="absolute inset-x-0 bottom-0 mx-auto h-2 w-20 rounded-tl-3xl rounded-tr-3xl bg-gradient-to-t from-[#272729] to-[#050505]" />
-        {showGradient && (
-          <div className="absolute inset-x-0 bottom-0 z-50 h-40 w-full bg-gradient-to-t from-black via-black to-transparent"></div>
-        )}
-        {badge && <div className="absolute bottom-10 left-10">{badge}</div>}
+      </motion.div>
+
+      {/* Sticky Container */}
+      <div className="sticky top-1/2 -translate-y-1/2 z-10">
+        <Lid
+          src={src}
+          scaleX={scaleX}
+          scaleY={scaleY}
+          rotate={rotate}
+        />
+        <Base />
       </div>
+
+      {/* Spacer for scroll */}
+      <div className="h-[100vh]" />
     </div>
   );
 };
 
 export const Lid = ({
-  scale,
+  scaleX,
+  scaleY,
   rotate,
-  translateY,
   src,
 }: {
-  scale: any;
+  scaleX: any;
+  scaleY: any;
   rotate: any;
-  translateY: any;
   src?: string;
 }) => {
   return (
-    <div className="relative [perspective:800px]">
-      <motion.div
+    <div className="relative [perspective:800px] z-10">
+      <div
         style={{
-          rotateX: rotate,
-          translateY: translateY,
-          transformStyle: 'preserve-3d',
-          transformOrigin: 'center center',
+          transform: "perspective(800px) rotateX(-25deg) translateZ(0px)",
+          transformOrigin: "bottom",
+          transformStyle: "preserve-3d",
         }}
-        className="relative h-[12rem] w-[32rem] rounded-2xl bg-[#010101] p-2"
+        className="h-[12rem] w-[32rem] bg-[#010101] rounded-2xl p-2 relative"
       >
         <div
           style={{
-            boxShadow: '0px 2px 0px 2px var(--neutral-900) inset',
+            boxShadow: "0px 2px 0px 2px var(--neutral-900) inset",
           }}
-          className="absolute inset-0 rounded-lg bg-[#010101] overflow-hidden"
+          className="absolute inset-0 bg-[#010101] rounded-lg flex items-center justify-center"
         >
-          {src ? (
-            <motion.div
-              style={{
-                scale: scale,
-                transformStyle: 'preserve-3d',
-                transformOrigin: 'center center',
-              }}
-              className="absolute inset-0 w-full h-full"
-            >
-              <div
-                className="absolute inset-0 w-full h-full rounded-lg bg-cover bg-center bg-no-repeat"
-                style={{
-                  backgroundImage: `url(${src})`,
-                }}
-              />
-            </motion.div>
-          ) : (
-            <div className="absolute inset-0 flex items-center justify-center">
-              <span className="text-white/40 text-xs">No screenshot</span>
-            </div>
-          )}
+          <span className="text-white">
+            <AceternityLogo />
+          </span>
         </div>
+      </div>
+      <motion.div
+        style={{
+          scaleX: scaleX,
+          scaleY: scaleY,
+          rotateX: rotate,
+          transformStyle: "preserve-3d",
+          transformOrigin: "top center",
+        }}
+        className="h-96 w-[32rem] absolute inset-0 bg-[#010101] rounded-2xl p-2 z-20"
+      >
+        <div className="absolute inset-0 bg-[#272729] rounded-lg" />
+        <img
+          src={src}
+          alt="macbook screen"
+          className="object-cover object-left-top absolute rounded-md inset-0 h-full w-full z-10"
+        />
       </motion.div>
     </div>
   );
 };
 
-export const Trackpad = () => {
+export const Base = () => {
   return (
-    <div
-      className="mx-auto my-1 h-32 w-[40%] rounded-xl"
-      style={{
-        boxShadow: '0px 0px 1px 1px #00000020 inset',
-      }}
-    ></div>
-  );
-};
+    <div className="h-[22rem] w-[32rem] relative -z-10">
+      <div className="relative h-full w-full">
+        {/* Top Section */}
+        <div className="h-2 w-full relative">
+          <div className="absolute inset-x-0 mx-auto w-[80%] h-2 bg-gradient-to-t from-transparent via-neutral-900 to-transparent" />
+        </div>
+        {/* Keyboard Base */}
+        <div className="flex flex-col items-center justify-start w-full bg-[#272729] rounded-md h-full p-4 pt-6">
+          {/* Keyboard Keys - Top Row (Function Keys) */}
+          <div className="flex gap-1 mb-2">
+            {[...Array(13)].map((_, i) => (
+              <div
+                key={`f-${i}`}
+                className="w-6 h-4 bg-gradient-to-b from-neutral-700 to-neutral-800 rounded shadow-inner"
+              />
+            ))}
+          </div>
 
-export const Keypad = () => {
-  return (
-    <div className="mx-1 h-full rounded-md bg-[#050505] p-1">
-      {/* First Row */}
-      <Row>
-        <KBtn
-          className="w-10 items-end justify-start pb-[2px] pl-[4px]"
-          childrenClassName="items-start"
-        >
-          esc
-        </KBtn>
-        <KBtn>
-          <div className="h-1.5 w-1.5 rounded-full bg-gradient-to-b from-gray-500 from-20% via-black via-50% to-gray-500 to-95%"></div>
-        </KBtn>
-        <KBtn>
-          <div className="h-1.5 w-1.5 rounded-full bg-gradient-to-b from-gray-500 from-20% via-black via-50% to-gray-500 to-95%"></div>
-        </KBtn>
-        <KBtn>
-          <div className="h-1.5 w-1.5 rounded-full bg-gradient-to-b from-gray-500 from-20% via-black via-50% to-gray-500 to-95%"></div>
-        </KBtn>
-        <KBtn>
-          <div className="h-1.5 w-1.5 rounded-full bg-gradient-to-b from-gray-500 from-20% via-black via-50% to-gray-500 to-95%"></div>
-        </KBtn>
-        <KBtn>
-          <div className="h-1.5 w-1.5 rounded-full bg-gradient-to-b from-gray-500 from-20% via-black via-50% to-gray-500 to-95%"></div>
-        </KBtn>
-        <KBtn>
-          <div className="h-1.5 w-1.5 rounded-full bg-gradient-to-b from-gray-500 from-20% via-black via-50% to-gray-500 to-95%"></div>
-        </KBtn>
-        <KBtn>
-          <div className="h-1.5 w-1.5 rounded-full bg-gradient-to-b from-gray-500 from-20% via-black via-50% to-gray-500 to-95%"></div>
-        </KBtn>
-        <KBtn>
-          <div className="h-1.5 w-1.5 rounded-full bg-gradient-to-b from-gray-500 from-20% via-black via-50% to-gray-500 to-95%"></div>
-        </KBtn>
-        <KBtn>
-          <div className="h-1.5 w-1.5 rounded-full bg-gradient-to-b from-gray-500 from-20% via-black via-50% to-gray-500 to-95%"></div>
-        </KBtn>
-        <KBtn>
-          <div className="h-1.5 w-1.5 rounded-full bg-gradient-to-b from-gray-500 from-20% via-black via-50% to-gray-500 to-95%"></div>
-        </KBtn>
-        <KBtn>
-          <div className="h-1.5 w-1.5 rounded-full bg-gradient-to-b from-gray-500 from-20% via-black via-50% to-gray-500 to-95%"></div>
-        </KBtn>
-        <KBtn>
-          <div className="h-1.5 w-1.5 rounded-full bg-gradient-to-b from-gray-500 from-20% via-black via-50% to-gray-500 to-95%"></div>
-        </KBtn>
+          {/* Keyboard Keys - Number Row */}
+          <div className="flex gap-1 mb-1.5">
+            {[...Array(13)].map((_, i) => (
+              <div
+                key={`n-${i}`}
+                className="w-7 h-6 bg-gradient-to-b from-neutral-700 to-neutral-800 rounded shadow-inner"
+              />
+            ))}
+          </div>
 
-        <KBtn>
-          <div className="h-1.5 w-1.5 rounded-full bg-gradient-to-b from-gray-500 from-20% via-black via-50% to-gray-500 to-95%"></div>
-        </KBtn>
-        <KBtn>
-          <div className="h-1.5 w-1.5 rounded-full bg-gradient-to-b from-gray-500 from-20% via-black via-50% to-gray-500 to-95%"></div>
-        </KBtn>
-        <KBtn>
-          <div className="h-4 w-4 rounded-full bg-gradient-to-b from-20% from-gray-200 via-50% via-gray-500 to-95% to-gray-300"></div>
-        </KBtn>
-      </Row>
+          {/* Keyboard Keys - QWERTY Row */}
+          <div className="flex gap-1 mb-1.5">
+            <div className="w-10 h-6 bg-gradient-to-b from-neutral-700 to-neutral-800 rounded shadow-inner" />
+            {[...Array(11)].map((_, i) => (
+              <div
+                key={`q-${i}`}
+                className="w-7 h-6 bg-gradient-to-b from-neutral-700 to-neutral-800 rounded shadow-inner"
+              />
+            ))}
+            <div className="w-10 h-6 bg-gradient-to-b from-neutral-700 to-neutral-800 rounded shadow-inner" />
+          </div>
 
-      {/* Second row */}
-      <Row>
-        <KBtn>
-          <span className="block">~</span>
-          <span className="mt-1 block">`</span>
-        </KBtn>
+          {/* Keyboard Keys - ASDF Row */}
+          <div className="flex gap-1 mb-1.5">
+            <div className="w-12 h-6 bg-gradient-to-b from-neutral-700 to-neutral-800 rounded shadow-inner" />
+            {[...Array(10)].map((_, i) => (
+              <div
+                key={`a-${i}`}
+                className="w-7 h-6 bg-gradient-to-b from-neutral-700 to-neutral-800 rounded shadow-inner"
+              />
+            ))}
+            <div className="w-12 h-6 bg-gradient-to-b from-neutral-700 to-neutral-800 rounded shadow-inner" />
+          </div>
 
-        <KBtn>
-          <span className="block">!</span>
-          <span className="block">1</span>
-        </KBtn>
-        <KBtn>
-          <span className="block">@</span>
-          <span className="block">2</span>
-        </KBtn>
-        <KBtn>
-          <span className="block">#</span>
-          <span className="block">3</span>
-        </KBtn>
-        <KBtn>
-          <span className="block">$</span>
-          <span className="block">4</span>
-        </KBtn>
-        <KBtn>
-          <span className="block">%</span>
-          <span className="block">5</span>
-        </KBtn>
-        <KBtn>
-          <span className="block">^</span>
-          <span className="block">6</span>
-        </KBtn>
-        <KBtn>
-          <span className="block">&</span>
-          <span className="block">7</span>
-        </KBtn>
-        <KBtn>
-          <span className="block">*</span>
-          <span className="block">8</span>
-        </KBtn>
-        <KBtn>
-          <span className="block">(</span>
-          <span className="block">9</span>
-        </KBtn>
-        <KBtn>
-          <span className="block">)</span>
-          <span className="block">0</span>
-        </KBtn>
-        <KBtn>
-          <span className="block">_</span>
-          <span className="block">-</span>
-        </KBtn>
-        <KBtn>
-          <span className="block">+</span>
-          <span className="block">=</span>
-        </KBtn>
-        <KBtn className="w-10 items-end justify-end pb-[2px] pr-[4px]">
-          delete
-        </KBtn>
-      </Row>
+          {/* Keyboard Keys - ZXCV Row */}
+          <div className="flex gap-1 mb-1.5">
+            <div className="w-14 h-6 bg-gradient-to-b from-neutral-700 to-neutral-800 rounded shadow-inner" />
+            {[...Array(9)].map((_, i) => (
+              <div
+                key={`z-${i}`}
+                className="w-7 h-6 bg-gradient-to-b from-neutral-700 to-neutral-800 rounded shadow-inner"
+              />
+            ))}
+            <div className="w-14 h-6 bg-gradient-to-b from-neutral-700 to-neutral-800 rounded shadow-inner" />
+          </div>
 
-      {/* Third row */}
-      <Row>
-        <KBtn className="w-10 items-end justify-start pb-[2px] pl-[4px]">
-          tab
-        </KBtn>
-        <KBtn>
-          <span>Q</span>
-        </KBtn>
-
-        <KBtn>
-          <span>W</span>
-        </KBtn>
-        <KBtn>
-          <span>E</span>
-        </KBtn>
-        <KBtn>
-          <span>R</span>
-        </KBtn>
-        <KBtn>
-          <span>T</span>
-        </KBtn>
-        <KBtn>
-          <span>Y</span>
-        </KBtn>
-        <KBtn>
-          <span>U</span>
-        </KBtn>
-        <KBtn>
-          <span>I</span>
-        </KBtn>
-        <KBtn>
-          <span>O</span>
-        </KBtn>
-        <KBtn>
-          <span>P</span>
-        </KBtn>
-        <KBtn>
-          <span className="block">{`{`}</span>
-          <span className="block">{`[`}</span>
-        </KBtn>
-        <KBtn>
-          <span className="block">{`}`}</span>
-          <span className="block">{`]`}</span>
-        </KBtn>
-        <KBtn>
-          <span className="block">{`|`}</span>
-          <span className="block">{`\\`}</span>
-        </KBtn>
-      </Row>
-
-      {/* Fourth Row */}
-      <Row>
-        <KBtn className="w-[2.8rem] items-end justify-start pb-[2px] pl-[4px]">
-          caps lock
-        </KBtn>
-        <KBtn>
-          <span>A</span>
-        </KBtn>
-
-        <KBtn>
-          <span>S</span>
-        </KBtn>
-        <KBtn>
-          <span>D</span>
-        </KBtn>
-        <KBtn>
-          <span>F</span>
-        </KBtn>
-        <KBtn>
-          <span>G</span>
-        </KBtn>
-        <KBtn>
-          <span>H</span>
-        </KBtn>
-        <KBtn>
-          <span>J</span>
-        </KBtn>
-        <KBtn>
-          <span>K</span>
-        </KBtn>
-        <KBtn>
-          <span>L</span>
-        </KBtn>
-        <KBtn>
-          <span className="block">{`:`}</span>
-          <span className="block">{`;`}</span>
-        </KBtn>
-        <KBtn>
-          <span className="block">{`"`}</span>
-          <span className="block">{`'`}</span>
-        </KBtn>
-        <KBtn className="w-[2.85rem] items-end justify-end pb-[2px] pr-[4px]">
-          return
-        </KBtn>
-      </Row>
-
-      {/* Fifth Row */}
-      <Row>
-        <KBtn className="w-[3.65rem] items-end justify-start pb-[2px] pl-[4px]">
-          shift
-        </KBtn>
-        <KBtn>
-          <span>Z</span>
-        </KBtn>
-        <KBtn>
-          <span>X</span>
-        </KBtn>
-        <KBtn>
-          <span>C</span>
-        </KBtn>
-        <KBtn>
-          <span>V</span>
-        </KBtn>
-        <KBtn>
-          <span>B</span>
-        </KBtn>
-        <KBtn>
-          <span>N</span>
-        </KBtn>
-        <KBtn>
-          <span>M</span>
-        </KBtn>
-        <KBtn>
-          <span className="block">{`<`}</span>
-          <span className="block">{`,`}</span>
-        </KBtn>
-        <KBtn>
-          <span className="block">{`>`}</span>
-          <span className="block">{`.`}</span>
-        </KBtn>{' '}
-        <KBtn>
-          <span className="block">{`?`}</span>
-          <span className="block">{`/`}</span>
-        </KBtn>
-        <KBtn className="w-[3.65rem] items-end justify-end pb-[2px] pr-[4px]">
-          shift
-        </KBtn>
-      </Row>
-
-      {/* sixth Row */}
-      <Row>
-        <KBtn className="" childrenClassName="h-full justify-between py-[4px]">
-          <div className="flex w-full justify-end pr-1">
-            <span className="block">fn</span>
-          </div>
-          <div className="flex w-full justify-start pl-1">
-            <IconWorld className="h-[6px] w-[6px]" />
-          </div>
-        </KBtn>
-        <KBtn className="" childrenClassName="h-full justify-between py-[4px]">
-          <div className="flex w-full justify-end pr-1">
-            <IconChevronUp className="h-[6px] w-[6px]" />
-          </div>
-          <div className="flex w-full justify-start pl-1">
-            <span className="block">control</span>
-          </div>
-        </KBtn>
-        <KBtn className="" childrenClassName="h-full justify-between py-[4px]">
-          <div className="flex w-full justify-end pr-1">
-            <OptionKey className="h-[6px] w-[6px]" />
-          </div>
-          <div className="flex w-full justify-start pl-1">
-            <span className="block">option</span>
-          </div>
-        </KBtn>
-        <KBtn
-          className="w-8"
-          childrenClassName="h-full justify-between py-[4px]"
-        >
-          <div className="flex w-full justify-end pr-1">
-            <IconCommand className="h-[6px] w-[6px]" />
-          </div>
-          <div className="flex w-full justify-start pl-1">
-            <span className="block">command</span>
-          </div>
-        </KBtn>
-        <KBtn className="w-[8.2rem]"></KBtn>
-        <KBtn
-          className="w-8"
-          childrenClassName="h-full justify-between py-[4px]"
-        >
-          <div className="flex w-full justify-start pl-1">
-            <IconCommand className="h-[6px] w-[6px]" />
-          </div>
-          <div className="flex w-full justify-start pl-1">
-            <span className="block">command</span>
-          </div>
-        </KBtn>
-        <KBtn className="" childrenClassName="h-full justify-between py-[4px]">
-          <div className="flex w-full justify-start pl-1">
-            <OptionKey className="h-[6px] w-[6px]" />
-          </div>
-          <div className="flex w-full justify-start pl-1">
-            <span className="block">option</span>
-          </div>
-        </KBtn>
-        <div className="mt-[2px] flex h-6 w-[4.9rem] flex-col items-center justify-end rounded-[4px] p-[0.5px]">
-          <KBtn className="h-3 w-6">
-            <IconCaretUp className="h-[6px] w-[6px]" />
-          </KBtn>
-          <div className="flex">
-            <KBtn className="h-3 w-6">
-              <IconCaretLeft className="h-[6px] w-[6px]" />
-            </KBtn>
-            <KBtn className="h-3 w-6">
-              <IconCaretDown className="h-[6px] w-[6px]" />
-            </KBtn>
-            <KBtn className="h-3 w-6">
-              <IconCaretRight className="h-[6px] w-[6px]" />
-            </KBtn>
+          {/* Keyboard Keys - Space Bar Row */}
+          <div className="flex gap-1">
+            <div className="w-8 h-6 bg-gradient-to-b from-neutral-700 to-neutral-800 rounded shadow-inner" />
+            <div className="w-8 h-6 bg-gradient-to-b from-neutral-700 to-neutral-800 rounded shadow-inner" />
+            <div className="w-8 h-6 bg-gradient-to-b from-neutral-700 to-neutral-800 rounded shadow-inner" />
+            <div className="flex-1 h-6 bg-gradient-to-b from-neutral-700 to-neutral-800 rounded shadow-inner" />
+            <div className="w-8 h-6 bg-gradient-to-b from-neutral-700 to-neutral-800 rounded shadow-inner" />
+            <div className="w-8 h-6 bg-gradient-to-b from-neutral-700 to-neutral-800 rounded shadow-inner" />
+            <div className="w-8 h-6 bg-gradient-to-b from-neutral-700 to-neutral-800 rounded shadow-inner" />
           </div>
         </div>
-      </Row>
-    </div>
-  );
-};
-export const KBtn = ({
-  className,
-  children,
-  childrenClassName,
-  backlit = true,
-}: {
-  className?: string;
-  children?: React.ReactNode;
-  childrenClassName?: string;
-  backlit?: boolean;
-}) => {
-  return (
-    <div
-      className={`rounded-[4px] p-[0.5px] ${
-        backlit && 'bg-white/[0.2] shadow-xl shadow-white'
-      } ${className}`}
-    >
-      <div
-        className={`flex h-6 w-6 items-center justify-center rounded-[3.5px] bg-[#0A0A0B] ${childrenClassName}`}
-        style={{
-          boxShadow:
-            '0px -0.5px 2px 0 #0D0D0F inset, -0.5px 0px 2px 0 #0D0D0F inset',
-        }}
-      >
-        <div className="flex w-full flex-col items-center justify-center text-[5px] text-neutral-200">
-          {children}
-        </div>
+        {/* Trackpad */}
+        <div className="absolute inset-x-0 mx-auto w-[15%] h-12 bottom-8 bg-gradient-to-t from-neutral-900 via-neutral-800 to-neutral-800 rounded-xl border border-neutral-700" />
       </div>
     </div>
   );
 };
 
-export const Row = ({ children }: { children: React.ReactNode }) => {
-  return (
-    <div className="mb-[2px] flex w-full flex-shrink-0 gap-[2px]">
-      {children}
-    </div>
-  );
-};
-
-export const SpeakerGrid = () => {
-  return (
-    <div
-      className="mt-2 flex h-40 gap-[2px] px-[0.5px]"
-      style={{
-        backgroundImage:
-          'radial-gradient(circle, #08080A 0.5px, transparent 0.5px)',
-        backgroundSize: '3px 3px',
-      }}
-    ></div>
-  );
-};
-
-export const OptionKey = ({ className }: { className?: string }) => {
+export const AceternityLogo = () => {
   return (
     <svg
+      width="66"
+      height="65"
+      viewBox="0 0 66 65"
       fill="none"
-      version="1.1"
-      id="icon"
       xmlns="http://www.w3.org/2000/svg"
-      viewBox="0 0 32 32"
-      className={className}
-    >
-      <rect
-        stroke="currentColor"
-        strokeWidth={2}
-        x="18"
-        y="5"
-        width="10"
-        height="2"
-      />
-      <polygon
-        stroke="currentColor"
-        strokeWidth={2}
-        points="10.6,5 4,5 4,7 9.4,7 18.4,27 28,27 28,25 19.6,25 "
-      />
-      <rect
-        id="_Transparent_Rectangle_"
-        className="st0"
-        width="32"
-        height="32"
-        stroke="none"
-      />
-    </svg>
-  );
-};
-
-export const IconWorld = ({ className }: { className?: string }) => {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      fill="none"
-      viewBox="0 0 24 24"
-      strokeWidth="1.5"
-      stroke="currentColor"
-      className={className}
+      className="h-3 w-3 text-white"
     >
       <path
+        d="M8 8.05571C8 8.05571 54.9009 18.1782 57.8687 30.062C60.8365 41.9458 9.05432 57.4696 9.05432 57.4696"
+        stroke="currentColor"
+        strokeWidth="15"
+        strokeMiterlimit="3.86874"
         strokeLinecap="round"
-        strokeLinejoin="round"
-        d="M12 21a9.004 9.004 0 008.716-6.747M12 21a9.004 9.004 0 01-8.716-6.747M12 21c2.485 0 4.5-4.03 4.5-9S14.485 3 12 3m0 18c-2.485 0-4.5-4.03-4.5-9S9.515 3 12 3m0 0a8.997 8.997 0 017.843 4.582M12 3a8.997 8.997 0 00-7.843 4.582m15.686 0A11.953 11.953 0 0112 10.5c-2.998 0-5.74-1.1-7.843-2.918m15.686 0A8.959 8.959 0 0121 12c0 .778-.099 1.533-.284 2.253m0 0A17.919 17.919 0 0112 16.5c-3.162 0-6.133-.815-8.716-2.247m0 0A9.015 9.015 0 013 12c0-1.605.42-3.113 1.157-4.418"
       />
-    </svg>
-  );
-};
-
-export const IconCommand = ({ className }: { className?: string }) => {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      fill="none"
-      viewBox="0 0 24 24"
-      strokeWidth="1.5"
-      stroke="currentColor"
-      className={className}
-    >
-      <path
-        strokeLinecap="round"
-        strokeLinejoin="round"
-        d="M8 9a3 3 0 100-6 3 3 0 000 6zM8 9v6m0 0a3 3 0 100 6 3 3 0 000-6zm0 0h8m0 0a3 3 0 100 6 3 3 0 000-6zm0 0V9m0 0a3 3 0 100-6 3 3 0 000 6z"
-      />
-    </svg>
-  );
-};
-
-export const IconCaretUp = ({ className }: { className?: string }) => {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      fill="none"
-      viewBox="0 0 24 24"
-      strokeWidth="1.5"
-      stroke="currentColor"
-      className={className}
-    >
-      <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" />
-    </svg>
-  );
-};
-
-export const IconCaretDown = ({ className }: { className?: string }) => {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      fill="none"
-      viewBox="0 0 24 24"
-      strokeWidth="1.5"
-      stroke="currentColor"
-      className={className}
-    >
-      <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" />
-    </svg>
-  );
-};
-
-export const IconCaretLeft = ({ className }: { className?: string }) => {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      fill="none"
-      viewBox="0 0 24 24"
-      strokeWidth="1.5"
-      stroke="currentColor"
-      className={className}
-    >
-      <path strokeLinecap="round" strokeLinejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
-    </svg>
-  );
-};
-
-export const IconCaretRight = ({ className }: { className?: string }) => {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      fill="none"
-      viewBox="0 0 24 24"
-      strokeWidth="1.5"
-      stroke="currentColor"
-      className={className}
-    >
-      <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5l7.5 7.5-7.5 7.5" />
-    </svg>
-  );
-};
-
-export const IconChevronUp = ({ className }: { className?: string }) => {
-  return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      fill="none"
-      viewBox="0 0 24 24"
-      strokeWidth="1.5"
-      stroke="currentColor"
-      className={className}
-    >
-      <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 15.75l7.5-7.5 7.5 7.5" />
     </svg>
   );
 };
