@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { ArrowRight, Zap, Shield, Cpu, Sparkles, Check } from 'lucide-react';
 import HeroScene from '@/components/3d/HeroScene';
 import { TypeAnimation } from 'react-type-animation';
-import { MacbookScroll } from '@/components/ui/MacbookScroll';
+import { MacbookScroll } from '@/components/ui/macbook-scroll';
 import { useTranslations, useLanguage } from '@/lib/LanguageContext';
 
 export default function HomePage() {
